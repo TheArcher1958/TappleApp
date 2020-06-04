@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'View/LoadingScreen.dart';
+import 'View/LoginScreen.dart' as LoginScreen;
 
 
 void main() => runApp(MaterialApp(
