@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart' as HomeScreen;
 import 'LoginScreen.dart' as LoginScreen;
+import 'StatsViewScreen.dart' as StatViewer;
 
 
 class LoadingScreen extends StatefulWidget {
@@ -20,7 +21,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Future.delayed(Duration(seconds:5), () {
       Navigator.pushReplacement(context, MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return LoginScreen.LoginScreen();
+          //return LoginScreen.LoginScreen();
+          return StatViewer.StatsViewScreen();
         },
       ),);
     });

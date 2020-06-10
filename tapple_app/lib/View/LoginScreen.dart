@@ -30,33 +30,37 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.35,
-            color: Color(0xffFE7615),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0,0,15,0),
-                  child: Image.asset(
-                    'assets/TappleLogo.jpg',
-                    width: 90,
-                    height: 90,
-                  ),
-                ),
+          ClipPath(
+            clipper: CustomHalfCircleClipper(),
+            child: Container(
 
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5,10,0,0),
-                  child: Text("Tapple",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontFamily: 'UniSansHeavy',
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.35,
+              color: Color(0xffFE7615),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,0,15,0),
+                    child: Image.asset(
+                      'assets/TappleLogo.jpg',
+                      width: 90,
+                      height: 90,
                     ),
                   ),
-                ),
-              ],
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5,10,0,0),
+                    child: Text("Tapple",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontFamily: 'UniSansHeavy',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -130,5 +134,20 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+}
+
+class CustomHalfCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(size.width/4, size.height - 40, size.width/2, size.height-20);
+    path.quadraticBezierTo(3/4*size.width, size.height, size.width, size.height-30);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomHalfCircleClipper oldClipper) {
   }
 }
