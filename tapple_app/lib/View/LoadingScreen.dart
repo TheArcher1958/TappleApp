@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart' as HomeScreen;
+import 'LoginScreen.dart' as LoginScreen;
+import 'StatsViewScreen.dart' as StatViewer;
+
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -18,7 +21,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Future.delayed(Duration(seconds:5), () {
       Navigator.pushReplacement(context, MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return HomeScreen.HomeScreen();
+          //return LoginScreen.LoginScreen();
+          return StatViewer.StatsViewScreen();
         },
       ),);
     });
@@ -27,7 +31,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF383c42),
+      color: Color(0xff2D3238),
       child: Column(
 
         children: [

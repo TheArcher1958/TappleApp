@@ -12,14 +12,20 @@ class _HomeScreenState extends State<HomeScreen> {
         length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Tapple'),
+          title: Text(
+            'Tapple',
+            style: TextStyle(
+              color: Colors.white
+            ),
+          ),
           backgroundColor: Color(0xffFE7615),
         ),
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
             new Container(
-              color: Colors.yellow,
+              color: Color(0xFF1d1d1d),
+              child: Text('Player Stats'),
             ),
             new Container(
               color: Colors.orange,
