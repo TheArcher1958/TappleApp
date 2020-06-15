@@ -16,11 +16,12 @@ class PlayerStatsObject {
 
 class PlayerStatsResponse {
   final String id;
-  final String username;
+  final String discordName;
   final String discriminator;
   final String uuid;
   final int totalxp;
   final String name;
+  final String rank;
   final int timestampFirstJoined;
   final int timeplayedMiliseconds;
 
@@ -154,7 +155,7 @@ class PlayerStatsResponse {
   final int horseCasualWinstreak;
   final int horseCasualBestWinstreak;
 
-  PlayerStatsResponse({this.id, this.username, this.discriminator, this.uuid, this.totalxp, this.name, this.timeplayedMiliseconds, this.timestampFirstJoined,
+  PlayerStatsResponse({this.id, this.rank, this.discordName, this.discriminator, this.uuid, this.totalxp, this.name, this.timeplayedMiliseconds, this.timestampFirstJoined,
     this.builduhcCasualBestWinstreak, this.builduhcCasualDeaths, this.builduhcCasualKills, this.builduhcCasualLosses, this.builduhcCasualWins, this.builduhcCasualWinstreak,
     this.builduhcCompetitiveBestWinstreak, this.builduhcCompetitiveDeaths, this.builduhcCompetitiveKills, this.builduhcCompetitiveLosses, this.builduhcCompetitiveWins,
     this.builduhcCompetitiveWinstreak, this.archerCasualBestWinstreak, this.archerCasualDeaths, this.archerCasualKills, this.archerCasualLosses, this.archerCasualWins, this.archerCasualWinstreak,
@@ -177,25 +178,26 @@ class PlayerStatsResponse {
   factory PlayerStatsResponse.fromJson(Map<String, dynamic> json) {
     return PlayerStatsResponse(
       id: json['id'] as String,
-      username: json['username'] as String,
+      rank: json['player-rank'] as String,
+      discordName: json['discordName'] as String,
       name: json['name'] as String,
       discriminator: json['discriminator'] as String,
       totalxp: json['totalxp'] as int,
       uuid: json['uuid'] as String,
-      timeplayedMiliseconds: json['timeplayedMiliseconds'] as int,
-      timestampFirstJoined: json['timestampFirstJoined'] as int,
-      casualBestWinstreak: json['casualBestWinstreak'] as int,
-      casualDeaths: json['casualDeaths'] as int,
-      casualKills: json['casualKills'] as int,
-      casualLosses: json['casualLosses'] as int,
-      casualWins: json['casualWins'] as int,
-      casualWinstreak: json['competitiveWinstreak'] as int,
-      competitiveBestWinstreak: json['competitiveBestWinstreak'] as int,
-      competitiveDeaths: json['competitiveDeaths'] as int,
-      competitiveKills: json['competitiveKills'] as int,
-      competitiveLosses: json['competitiveLosses'] as int,
-      competitiveWins: json['competitiveWins'] as int,
-      competitiveWinstreak: json['competitiveWinstreak'] as int,
+      timeplayedMiliseconds: json['timeplayed-milliseconds'] as int,
+      timestampFirstJoined: json['timestamp-first-joined'] as int,
+      casualBestWinstreak: json['casual-highest-winstreak'] as int,
+      casualDeaths: json['casual-deaths'] as int,
+      casualKills: json['casual-kills'] as int,
+      casualLosses: json['casual-losses'] as int,
+      casualWins: json['casual-wins'] as int,
+      casualWinstreak: json['competitive-winstreak'] as int,
+      competitiveBestWinstreak: json['competitive-highest-winstreak'] as int,
+      competitiveDeaths: json['competitive-deaths'] as int,
+      competitiveKills: json['competitive-kills'] as int,
+      competitiveLosses: json['competitive-losses'] as int,
+      competitiveWins: json['competitive-wins'] as int,
+      competitiveWinstreak: json['competitive-winstreak'] as int,
 
 
       builduhcCasualWins: json['builduhc-casual-wins'] as int,
