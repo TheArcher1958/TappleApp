@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tappleapp/Model/playerStatsObjectModel.dart';
 
-Future<PlayerStatsObject> fetchResults() async {
-  final response = await http.get('https://tapple.world/tools/playerV2.php?name=Erferno');
+Future<PlayerStatsObject> fetchResults(name) async {
+  final response = await http.get('https://tapple.world/tools/playerV2.php?name=${name}');
 
   if (response.statusCode == 200) {
 

@@ -1,4 +1,4 @@
-
+// 121 properties!
 
 class PlayerStatsObject {
   final bool success;
@@ -54,7 +54,7 @@ class PlayerStatsResponse {
   final int builduhcCompetitiveDeaths;
   final int builduhcCompetitiveWinstreak;
   final int builduhcCompetitiveBestWinstreak;
-
+  final int builduhcXP;
 
   final int archerCasualWins;
   final int archerCasualLosses;
@@ -69,6 +69,7 @@ class PlayerStatsResponse {
   final int archerCompetitiveDeaths;
   final int archerCompetitiveWinstreak;
   final int archerCompetitiveBestWinstreak;
+  final int archerXP;
 
 
   final int potionCasualWins;
@@ -84,6 +85,7 @@ class PlayerStatsResponse {
   final int potionCompetitiveDeaths;
   final int potionCompetitiveWinstreak;
   final int potionCompetitiveBestWinstreak;
+  final int potionXP;
 
 
   final int parkourCasualWins;
@@ -92,12 +94,14 @@ class PlayerStatsResponse {
   final int parkourCasualDeaths;
   final int parkourCasualWinstreak;
   final int parkourCasualBestWinstreak;
+
   final int parkourCompetitiveWins;
   final int parkourCompetitiveLosses;
   final int parkourCompetitiveKills;
   final int parkourCompetitiveDeaths;
   final int parkourCompetitiveWinstreak;
   final int parkourCompetitiveBestWinstreak;
+  final int parkourXP;
 
 
   final int comboCasualWins;
@@ -106,6 +110,7 @@ class PlayerStatsResponse {
   final int comboCasualDeaths;
   final int comboCasualWinstreak;
   final int comboCasualBestWinstreak;
+  final int comboXP;
 
 
   final int sgCasualWins;
@@ -114,6 +119,7 @@ class PlayerStatsResponse {
   final int sgCasualDeaths;
   final int sgCasualWinstreak;
   final int sgCasualBestWinstreak;
+  final int sgXP;
 
 
   final int skywarsCasualWins;
@@ -122,6 +128,7 @@ class PlayerStatsResponse {
   final int skywarsCasualDeaths;
   final int skywarsCasualWinstreak;
   final int skywarsCasualBestWinstreak;
+  final int skywarsXP;
 
 
   final int soupCasualWins;
@@ -130,6 +137,7 @@ class PlayerStatsResponse {
   final int soupCasualDeaths;
   final int soupCasualWinstreak;
   final int soupCasualBestWinstreak;
+  final int soupXP;
 
 
   final int sumoCasualWins;
@@ -138,6 +146,7 @@ class PlayerStatsResponse {
   final int sumoCasualDeaths;
   final int sumoCasualWinstreak;
   final int sumoCasualBestWinstreak;
+  final int sumoXP;
 
 
   final int spleefCasualWins;
@@ -146,6 +155,7 @@ class PlayerStatsResponse {
   final int spleefCasualDeaths;
   final int spleefCasualWinstreak;
   final int spleefCasualBestWinstreak;
+  final int spleefXP;
 
 
   final int horseCasualWins;
@@ -154,13 +164,15 @@ class PlayerStatsResponse {
   final int horseCasualDeaths;
   final int horseCasualWinstreak;
   final int horseCasualBestWinstreak;
+  final int horseXP;
 
-  PlayerStatsResponse({this.id, this.rank, this.discordName, this.discriminator, this.uuid, this.totalxp, this.name, this.timeplayedMiliseconds, this.timestampFirstJoined,
-    this.builduhcCasualBestWinstreak, this.builduhcCasualDeaths, this.builduhcCasualKills, this.builduhcCasualLosses, this.builduhcCasualWins, this.builduhcCasualWinstreak,
-    this.builduhcCompetitiveBestWinstreak, this.builduhcCompetitiveDeaths, this.builduhcCompetitiveKills, this.builduhcCompetitiveLosses, this.builduhcCompetitiveWins,
-    this.builduhcCompetitiveWinstreak, this.archerCasualBestWinstreak, this.archerCasualDeaths, this.archerCasualKills, this.archerCasualLosses, this.archerCasualWins, this.archerCasualWinstreak,
-    this.archerCompetitiveBestWinstreak, this.archerCompetitiveDeaths, this.archerCompetitiveKills, this.archerCompetitiveLosses,this.archerCompetitiveWins,
-    this.archerCompetitiveWinstreak, this.casualBestWinstreak,this.casualDeaths,this.casualKills,this.casualLosses,this.casualWins,this.casualWinstreak,
+
+  PlayerStatsResponse({this.id,this.rank,this.discordName,this.discriminator,this.uuid,this.totalxp,this.name,this.timeplayedMiliseconds,this.timestampFirstJoined,
+    this.builduhcCasualBestWinstreak,this.builduhcCasualDeaths, this.builduhcCasualKills, this.builduhcCasualLosses, this.builduhcCasualWins, this.builduhcCasualWinstreak,
+    this.builduhcCompetitiveBestWinstreak,this.builduhcCompetitiveDeaths, this.builduhcCompetitiveKills, this.builduhcCompetitiveLosses, this.builduhcCompetitiveWins,
+    this.builduhcCompetitiveWinstreak,this.archerCasualBestWinstreak, this.archerCasualDeaths, this.archerCasualKills, this.archerCasualLosses, this.archerCasualWins, this.archerCasualWinstreak,
+    this.archerCompetitiveBestWinstreak,this.archerCompetitiveDeaths, this.archerCompetitiveKills, this.archerCompetitiveLosses,this.archerCompetitiveWins,
+    this.archerCompetitiveWinstreak,this.casualBestWinstreak,this.casualDeaths,this.casualKills,this.casualLosses,this.casualWins,this.casualWinstreak,
     this.comboCasualBestWinstreak,this.comboCasualDeaths,this.comboCasualKills,this.comboCasualLosses,this.comboCasualWins,this.comboCasualWinstreak,this.competitiveBestWinstreak,this.competitiveDeaths,
     this.competitiveKills,this.competitiveLosses,this.competitiveWins,this.competitiveWinstreak,this.horseCasualBestWinstreak,this.horseCasualDeaths,this.horseCasualKills,
     this.horseCasualLosses,this.horseCasualWins,this.horseCasualWinstreak,this.parkourCasualBestWinstreak,this.parkourCasualDeaths,this.parkourCasualKills,
@@ -172,8 +184,10 @@ class PlayerStatsResponse {
     this.skywarsCasualDeaths,this.skywarsCasualKills,this.skywarsCasualLosses,this.skywarsCasualWins,this.skywarsCasualWinstreak,
     this.soupCasualBestWinstreak,this.soupCasualDeaths,this.soupCasualKills,this.soupCasualLosses,this.soupCasualWins,this.soupCasualWinstreak,
     this.spleefCasualBestWinstreak,this.spleefCasualDeaths,this.spleefCasualKills,this.spleefCasualLosses,this.spleefCasualWins,this.spleefCasualWinstreak,
-    this.sumoCasualBestWinstreak,this.sumoCasualDeaths,this.sumoCasualKills,this.sumoCasualLosses,this.sumoCasualWins,this.sumoCasualWinstreak
+    this.sumoCasualBestWinstreak,this.sumoCasualDeaths,this.sumoCasualKills,this.sumoCasualLosses,this.sumoCasualWins,this.sumoCasualWinstreak,
+    this.archerXP,this.builduhcXP,this.comboXP,this.horseXP,this.parkourXP,this.potionXP,this.sgXP,this.skywarsXP,this.soupXP,this.spleefXP,this.sumoXP
   });
+
 
   factory PlayerStatsResponse.fromJson(Map<String, dynamic> json) {
     return PlayerStatsResponse(
@@ -199,6 +213,17 @@ class PlayerStatsResponse {
       competitiveWins: json['competitive-wins'] as int,
       competitiveWinstreak: json['competitive-winstreak'] as int,
 
+      builduhcXP: json["builduhc-xp"] as int,
+      archerXP: json["archer-xp"] as int,
+      potionXP: json["potion-xp"] as int,
+      parkourXP: json["parkour-xp"] as int,
+      sumoXP: json["sumo-xp"] as int,
+      spleefXP: json["spleef-xp"] as int,
+      soupXP: json["soup-xp"] as int,
+      skywarsXP: json["skywars-xp"] as int,
+      sgXP: json["sg-xp"] as int,
+      horseXP: json["horse-xp"] as int,
+      comboXP: json["combo-xp"] as int,
 
       builduhcCasualWins: json['builduhc-casual-wins'] as int,
       builduhcCasualLosses: json['builduhc-casual-losses'] as int,
