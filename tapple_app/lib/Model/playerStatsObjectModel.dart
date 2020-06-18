@@ -55,6 +55,8 @@ class PlayerStatsResponse {
   final int builduhcCompetitiveWinstreak;
   final int builduhcCompetitiveBestWinstreak;
   final int builduhcXP;
+  final int builduhcElo;
+
 
   final int archerCasualWins;
   final int archerCasualLosses;
@@ -70,6 +72,7 @@ class PlayerStatsResponse {
   final int archerCompetitiveWinstreak;
   final int archerCompetitiveBestWinstreak;
   final int archerXP;
+  final int archerElo;
 
 
   final int potionCasualWins;
@@ -86,6 +89,7 @@ class PlayerStatsResponse {
   final int potionCompetitiveWinstreak;
   final int potionCompetitiveBestWinstreak;
   final int potionXP;
+  final int potionElo;
 
 
   final int parkourCasualWins;
@@ -102,6 +106,7 @@ class PlayerStatsResponse {
   final int parkourCompetitiveWinstreak;
   final int parkourCompetitiveBestWinstreak;
   final int parkourXP;
+  final int parkourElo;
 
 
   final int comboCasualWins;
@@ -185,7 +190,8 @@ class PlayerStatsResponse {
     this.soupCasualBestWinstreak,this.soupCasualDeaths,this.soupCasualKills,this.soupCasualLosses,this.soupCasualWins,this.soupCasualWinstreak,
     this.spleefCasualBestWinstreak,this.spleefCasualDeaths,this.spleefCasualKills,this.spleefCasualLosses,this.spleefCasualWins,this.spleefCasualWinstreak,
     this.sumoCasualBestWinstreak,this.sumoCasualDeaths,this.sumoCasualKills,this.sumoCasualLosses,this.sumoCasualWins,this.sumoCasualWinstreak,
-    this.archerXP,this.builduhcXP,this.comboXP,this.horseXP,this.parkourXP,this.potionXP,this.sgXP,this.skywarsXP,this.soupXP,this.spleefXP,this.sumoXP
+    this.archerXP,this.builduhcXP,this.comboXP,this.horseXP,this.parkourXP,this.potionXP,this.sgXP,this.skywarsXP,this.soupXP,this.spleefXP,this.sumoXP,
+    this.archerElo,this.builduhcElo,this.parkourElo,this.potionElo
   });
 
 
@@ -224,6 +230,11 @@ class PlayerStatsResponse {
       sgXP: json["sg-xp"] as int,
       horseXP: json["horse-xp"] as int,
       comboXP: json["combo-xp"] as int,
+
+      archerElo: json["archer-elo"] as int,
+      builduhcElo: json["builduhc-elo"] as int,
+      parkourElo: json["parkour-elo"] as int,
+      potionElo: json["potion-elo"] as int,
 
       builduhcCasualWins: json['builduhc-casual-wins'] as int,
       builduhcCasualLosses: json['builduhc-casual-losses'] as int,

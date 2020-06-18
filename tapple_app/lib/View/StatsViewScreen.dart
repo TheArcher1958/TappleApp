@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:tappleapp/Model/playerStatsObjectModel.dart';
 import 'package:tappleapp/Controller/PlayerStatsNetworkController.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:tappleapp/Controller/xpToLevelsConverter.dart';
 import 'package:intl/intl.dart';
 
 
 
 
 class StatsViewScreen extends StatefulWidget {
+  final String playerName;//if you have multiple values add here
+  StatsViewScreen(this.playerName, {Key key}): super(key: key);
+  //StatsViewScreen(this.playerName);
+  //StatsViewScreen({Key key, @required this.playerName}) : super(key: key);
+
   @override
-  _StatsViewScreenState createState() => _StatsViewScreenState();
+//  State<StatefulWidget> createState() {
+//    return _StatsViewScreenState();
+//  }
+  //_StatsViewScreenState createState() => _StatsViewScreenState();
+  State<StatefulWidget> createState() => _StatsViewScreenState();
 }
 
 class _StatsViewScreenState extends State<StatsViewScreen> {
-  var playerName = "erferno";
+  //String playerName;
+  //_StatsViewScreenState(this.playerName);
+
   var rankColors = {
     'group.default': 'FFFFFF',
     'group.apple': 'FF5555',
@@ -54,7 +66,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
 
   Future<PlayerStatsObject> getData() async {
-    return fetchResults(playerName);
+    return fetchResults(widget.playerName);
   }
 
   void getObjectFromFuture() async {
@@ -100,17 +112,17 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(
-                              height: 120,
-                              width: 120,
+                              height: 100,
+                              width: 100,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                                padding: const EdgeInsets.fromLTRB(5, 8, 0, 8),
                                 child: Image.network("https://crafatar.com/avatars/${data.response.uuid}"),
                               ),
                             ),
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20,0,0,0),
+                          padding: const EdgeInsets.fromLTRB(5,0,0,0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -134,6 +146,10 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),),
+                              Text("Total XP:", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
                             ],
                           ),
                         ),
@@ -146,8 +162,9 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               Text("${rankNames[data.response.rank]}", style: TextStyle(fontSize: 17, color: Color(int.parse("0xff${rankColors[data.response.rank]}"))),),
                               Text("${data.response.discordName}#${data.response.discriminator}", style: TextStyle(fontSize: 17),),
                               Text("${DateFormat.yMMMd().format(new DateTime.fromMillisecondsSinceEpoch(data.response.timestampFirstJoined))}", style: TextStyle(fontSize: 17),),
-                              Text("${data.response.totalxp}", style: TextStyle(fontSize: 17),), // TODO: Add formula to convert xp to levels
+                              Text("${getLevelInfo(data.response.totalxp).levelAndFraction.toStringAsFixed(2)}", style: TextStyle(fontSize: 17),), // TODO: Add formula to convert xp to levels
                               Text("${(data.response.timeplayedMiliseconds / 360000).toStringAsFixed(2)} hr", style: TextStyle(fontSize: 17),),
+                              Text("${data.response.totalxp.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(fontSize: 17),),
                             ],
                           ),
                         )
@@ -317,7 +334,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 155,
+                  height: 195,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -337,6 +354,36 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               fontFamily: 'UniSansHeavy',
                             ),),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Build XP:  ", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
+                              Text("${data.response.builduhcXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                fontSize: 16,
+                              ),),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Build Elo:  ", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
+                              Text("${data.response.builduhcElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                fontSize: 16,
+                              ),),
+                            ],
+                          ),
                         ),
 
                         Row(
@@ -456,7 +503,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 155,
+                    height: 195,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -478,6 +525,36 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   fontFamily: 'UniSansHeavy',
                                 ),),
                               ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Archer XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.archerXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Archer Elo:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.archerElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
                             ),
 
                             Row(
@@ -620,7 +697,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 155,
+                  height: 195,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -640,6 +717,36 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               fontFamily: 'UniSansHeavy',
                             ),),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Potion XP:  ", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
+                              Text("${data.response.potionXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                fontSize: 16,
+                              ),),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Potion Elo:  ", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),),
+                              Text("${data.response.potionElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                fontSize: 16,
+                              ),),
+                            ],
+                          ),
                         ),
 
                         Row(
@@ -759,7 +866,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 155,
+                    height: 195,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -781,6 +888,38 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   fontFamily: 'UniSansHeavy',
                                 ),),
                               ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("Combo XP:  ", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("${data.response.comboXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                        fontSize: 16,
+                                      ),),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("SG XP:  ", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("${data.response.sgXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                        fontSize: 16,
+                                      ),),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
 
                             Row(
@@ -921,7 +1060,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 155,
+                  height: 195,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -941,6 +1080,38 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               fontFamily: 'UniSansHeavy',
                             ),),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Skywars XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.skywarsXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Soup XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.soupXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
 
                         Row(
@@ -1060,7 +1231,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 155,
+                    height: 195,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -1082,6 +1253,36 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   fontFamily: 'UniSansHeavy',
                                 ),),
                               ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Parkour XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.parkourXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Parkour Elo:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.parkourElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
                             ),
 
                             Row(
@@ -1223,7 +1424,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 155,
+                  height: 195,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -1243,6 +1444,38 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               fontFamily: 'UniSansHeavy',
                             ),),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Sumo XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.sumoXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Spleef XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.spleefXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
 
                         Row(
@@ -1362,7 +1595,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 155,
+                    height: 195,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -1379,6 +1612,21 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   fontFamily: 'UniSansHeavy',
                                 ),),
                               ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Horse XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.horseXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
                             ),
 
                             Row(

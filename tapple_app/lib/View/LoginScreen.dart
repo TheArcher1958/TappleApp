@@ -22,13 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        backgroundColor: Colors.blue,
-//        title: Text('HyStats'),
-//        centerTitle: true,
-//      ),
       body: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ClipPath(
             clipper: CustomHalfCircleClipper(),
