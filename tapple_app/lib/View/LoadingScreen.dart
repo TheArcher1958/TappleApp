@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart' as HomeScreen;
 import 'LoginScreen.dart' as LoginScreen;
-import 'playerStatsSearch.dart' as PlayerSearch;
+import 'PlayerStatsSearch.dart' as PlayerSearch;
 
 import 'StatsViewScreen.dart' as StatViewer;
 
@@ -25,7 +25,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
         builder: (BuildContext context) {
           //return LoginScreen.LoginScreen();
           //return StatViewer.StatsViewScreen();
-          return PlayerSearch.PlayerStatsSearch();
+          //return PlayerSearch.PlayerStatsSearch();
+          return HomeScreen.HomeScreen();
         },
       ),);
     });

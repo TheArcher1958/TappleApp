@@ -19,12 +19,12 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Player Stats"
-        ),
-        centerTitle: true,
-      ),
+//      appBar: AppBar(
+//        title: Text(
+//          "Player Stats"
+//        ),
+//        centerTitle: true,
+//      ),
       body: Container(
         child: Column(
           children: <Widget>[
