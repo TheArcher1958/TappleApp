@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tappleapp/View/LeaderboardsListScreen.dart';
 import 'PlayerStatsSearch.dart';
 import 'LeaderboardsScreen.dart';
 
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Text('Hey'),
     ),
     PlayerStatsSearch(),
-    LeaderboardsScreen(),
+    LeaderboardsListScreen(),
   ];
   var thing = 0;
   @override
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Color(0xffff0e19),
                 ),
                 child: Text(
                   'Tapple',
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.message),
+                leading: Icon(Icons.account_circle),
                 title: Text('Player Stats'),
                 onTap: () {
                   _toggleScreen(1);
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
+                leading: Icon(Icons.list),
                 title: Text('Leaderboards'),
                 onTap: () {
                   _toggleScreen(2);
