@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart' as HomeScreen;
-import 'LoginScreen.dart' as LoginScreen;
-import 'playerStatsSearch.dart' as PlayerSearch;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'StatsViewScreen.dart' as StatViewer;
+
 
 
 class LoadingScreen extends StatefulWidget {
@@ -12,20 +11,34 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  bool _loading;
 
+  Future<List<dynamic>> getLogin(storage) async {
+    var tapUser = storage.read(key: "tappleUsername");
+    var tapPass = storage.read(key: "tapplePassword");
+
+    return [tapUser, tapPass];
+  }
+
+  void checkForLogin(storage) async {
+    getLogin(storage).then((List<dynamic> result){
+      Navigator.pushReplacement(context, MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return HomeScreen.HomeScreen();
+        },
+      ),);
+    });
+  }
 
 
   @override
   void initState() {
     super.initState();
-    _loading = false;
-    Future.delayed(Duration(seconds:5), () {
+    Future.delayed(Duration(seconds:3), () {
+      final storage = new FlutterSecureStorage();
+      checkForLogin(storage);
       Navigator.pushReplacement(context, MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          //return LoginScreen.LoginScreen();
-          //return StatViewer.StatsViewScreen();
-          return PlayerSearch.PlayerStatsSearch();
+          return HomeScreen.HomeScreen();
         },
       ),);
     });

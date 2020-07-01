@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tappleapp/Model/playerStatsObjectModel.dart';
+import 'package:tappleapp/Model/PlayerStatsObjectModel.dart';
 import 'package:tappleapp/Controller/PlayerStatsNetworkController.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:tappleapp/Controller/xpToLevelsConverter.dart';
