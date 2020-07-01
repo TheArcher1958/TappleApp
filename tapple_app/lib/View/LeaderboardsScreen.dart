@@ -50,17 +50,21 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
 
   var leaderboardGamemodeNames = {
     'totalxp': 'Total XP',
-    'normal_build': 'Build UHC',
-    'normal_archer': 'Archer',
-    'normal_potion': 'Potion',
-    'normal_combo': 'Combo',
-    'normal_sg': 'SG',
-    'normal_skywars': 'Skywars',
-    'normal_soup': 'Soup',
-    'normal_parkour': 'Parkour',
-    'normal_sumo': 'Sumo',
-    'normal_spleef': 'Spleef',
-    'normal_horse': 'Horse',
+    'normal_build': 'Build UHC XP',
+    'build_elo': 'Build UHC Elo',
+    'normal_archer': 'Archer XP',
+    'archer_elo': 'Archer Elo',
+    'normal_potion': 'Potion XP',
+    'potion_elo': 'Potion Elo',
+    'normal_combo': 'Combo XP',
+    'normal_sg': 'SG XP',
+    'normal_skywars': 'Skywars XP',
+    'normal_soup': 'Soup XP',
+    'normal_parkour': 'Parkour XP',
+    'parkour_elo': 'Parkour Elo',
+    'normal_sumo': 'Sumo XP',
+    'normal_spleef': 'Spleef XP',
+    'normal_horse': 'Horse XP',
   };
 
   LeaderboardsObject data;
@@ -127,7 +131,7 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
                   numeric: false,
                 ),
                 DataColumn(
-                  label: Text("XP",style: TextStyle(
+                  label: Text("${widget.leaderboardPath.contains("elo") ? "Elo" : "XP"}",style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     fontFamily: 'UniSansHeavy',
