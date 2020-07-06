@@ -19,12 +19,6 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text(
-//          "Player Stats"
-//        ),
-//        centerTitle: true,
-//      ),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -50,16 +44,6 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
                 textColor: Colors.white,
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(_controller.text)));
-
-//                  Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                      builder: (context) => StatsViewScreen(_controller.text),
-//                    ),
-//                  );
-//                  Navigator.pushNamed(context, "/playerStats", arguments: {
-//                    'playerName': _controller.text,
-//                  });
                 },
                 color: Color(0xffFE7615),
               ),
