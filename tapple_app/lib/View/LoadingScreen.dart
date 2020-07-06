@@ -36,11 +36,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Future.delayed(Duration(seconds:3), () {
       final storage = new FlutterSecureStorage();
       checkForLogin(storage);
-      Navigator.pushReplacement(context, MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return HomeScreen.HomeScreen();
-        },
-      ),);
+//      Navigator.pushReplacement(context, MaterialPageRoute<void>(
+//        builder: (BuildContext context) {
+//          //return HomeScreen.HomeScreen();
+//          return LoadingScreen2();
+//        },
+//      ),);
+      //Navigator.pushReplacementNamed(context, "/login");
     });
   }
 

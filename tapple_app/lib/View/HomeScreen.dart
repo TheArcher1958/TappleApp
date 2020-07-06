@@ -34,10 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _toggleScreen(num) {
-    setState(() {
-      pageIndex = num;
-    });
+  void _toggleScreen(num,ctx) {
+    if(num == 4) {
+      Navigator.of(ctx).pop();
+      Navigator.pushNamed(ctx, "/login");
+    } else {
+      setState(() {
+        pageIndex = num;
+      });
+    }
   }
 
   var listOfScreens = [
@@ -88,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.show_chart),
               title: Text('Player Stats'),
               onTap: () {
-                _toggleScreen(1);
+                _toggleScreen(1, context);
                 Navigator.of(context).pop();
               },
             ),
@@ -96,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.list),
               title: Text('Leaderboards'),
               onTap: () {
-                _toggleScreen(2);
+                _toggleScreen(2, context);
                 Navigator.of(context).pop();
               },
             ),
@@ -104,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.forum),
               title: Text('Forums'),
               onTap: () {
-                _toggleScreen(3);
+                _toggleScreen(3,context);
                 Navigator.of(context).pop();
               },
             ),
@@ -120,15 +125,16 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
-                _toggleScreen(4);
                 Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LoginScreen()));
+                //Navigator.pushNamed(context, "/login");
               },
             ),
           ],
         ),
       ),
 
-      body: listOfScreens[pageIndex]
+      body: listOfScreens[pageIndex],
     );
   }
 }
