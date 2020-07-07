@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
+import 'package:tappleapp/Globals.dart';
 import 'HomeScreen.dart' as HomeScreen;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 
@@ -13,14 +14,31 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<List<dynamic>> getLogin(storage) async {
-    var tapUser = storage.read(key: "tappleUsername");
-    var tapPass = storage.read(key: "tapplePassword");
+    var tapUser = await storage.read(key: "tappleUsername");
+    var tapPass = await storage.read(key: "tapplePassword");
 
     return [tapUser, tapPass];
   }
 
+  _deleteLogin(storage) async {
+    await storage.delete(key: "tappleUsername");
+    await storage.delete(key: "tapplePassword");
+  }
+
   void checkForLogin(storage) async {
-    getLogin(storage).then((List<dynamic> result){
+    getLogin(storage).then((List<dynamic> result) async {
+      if(result[0] != null && result[1] != null) {
+        await fetchUserFromLogin(result[0], result[1]).then((userResponse) {
+          if(userResponse == null) {
+            _deleteLogin(storage);
+          } else {
+            print(userResponse.user.username);
+            globalUser = userResponse.user;
+          }
+        });
+      } else {
+        print("No user saved!");
+      }
       Navigator.pushReplacement(context, MaterialPageRoute<void>(
         builder: (BuildContext context) {
           return HomeScreen.HomeScreen();
@@ -34,15 +52,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds:3), () {
-      final storage = new FlutterSecureStorage();
       checkForLogin(storage);
-//      Navigator.pushReplacement(context, MaterialPageRoute<void>(
-//        builder: (BuildContext context) {
-//          //return HomeScreen.HomeScreen();
-//          return LoadingScreen2();
-//        },
-//      ),);
-      //Navigator.pushReplacementNamed(context, "/login");
     });
   }
 

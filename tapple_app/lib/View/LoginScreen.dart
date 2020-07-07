@@ -1,6 +1,7 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
+
+import '../Globals.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,6 +9,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  _saveLoginDetails(storage, username, password) async {
+    await storage.write(key: "tappleUsername", value: username);
+    await storage.write(key: "tapplePassword", value: password);
+  }
 
   _handleLoginRequest(username, password, ctx) async {
     await fetchUserFromLogin(username, password).then((result){
@@ -22,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Scaffold.of(ctx).showSnackBar(snackBar);
       } else {
         print(result.user.username);
+        _saveLoginDetails(storage, username, password);
+        Navigator.pop(ctx);
       };
     });
   }
@@ -50,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ClipPath(
             clipper: CustomHalfCircleClipper(),
             child: Container(
-
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.35,
               color: Color(0xffFE7615),

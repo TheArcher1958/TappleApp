@@ -15,6 +15,13 @@ class XFPostListScreen extends StatefulWidget {
 class _XFPostListScreenState extends State<XFPostListScreen> {
   ThreadPosts data;
 
+  String _filterMessage(message) {
+    final newMessage = message.replaceAllMapped(RegExp('(\\[\\/*\\w+[=a-zA-Z_\\-:/. ,0-9()\'"]*\\])'), (match) {
+      return '';
+    });
+    return newMessage;
+  }
+
   String _toRecase(theString) {
     ReCase rc = new ReCase(theString);
     return rc.titleCase;
@@ -137,7 +144,7 @@ class _XFPostListScreenState extends State<XFPostListScreen> {
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(5,0,5,10),
                                       child: Container(
-                                        child: Text(data.posts[index].message),
+                                        child: Text(_filterMessage(data.posts[index].message)),
                                       ),
                                     ),
                                   ],

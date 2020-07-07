@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
-import 'package:tappleapp/View/styling.dart';
+import '../Globals.dart';
 import 'LoginScreen.dart';
 import 'PlayerStatsSearch.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'LeaderboardsScreen.dart';
-import 'package:tappleapp/Controller/XFNodeListNetworkController.dart';
-
 import 'XFNodeListScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,12 +12,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+      Future.delayed(Duration(milliseconds: 500)).then((_) {
+        if (globalUser != null) {
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              backgroundColor: Color(0xff303c42),
+              content: Text('Logged in as ' + globalUser.username,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          );
+        }
+      }
+    )
+    });
+  }
 
 
   _launchStore(BuildContext context) async {
-    const url = 'https://store.tappleworld';
+    const url = 'https://store.tapple.world';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -35,14 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _toggleScreen(num,ctx) {
-    if(num == 4) {
-      Navigator.of(ctx).pop();
-      Navigator.pushNamed(ctx, "/login");
-    } else {
-      setState(() {
-        pageIndex = num;
-      });
-    }
+    setState(() {
+      pageIndex = num;
+    });
   }
 
   var listOfScreens = [
@@ -58,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           'Tapple',
