@@ -3,8 +3,8 @@ import 'XFThreadListObjectModel.dart';
 
 class ThreadPosts {
   final List<Post> posts;
-  //final Pagination pagination;
-  ThreadPosts(this.posts);
+  final Pagination pagination;
+  ThreadPosts(this.posts, this.pagination);
 
   factory ThreadPosts.fromJson(dynamic json) {
     var tagObjsJson = json['posts'] as List;
@@ -12,6 +12,22 @@ class ThreadPosts {
         .toList();
     return ThreadPosts(
       _tags,
+      Pagination.fromJson(json['pagination']),
+    );
+  }
+}
+
+class Pagination {
+  final int current_page;
+  final int last_page;
+  final int total;
+
+  Pagination(this.current_page,this.last_page,this.total);
+  factory Pagination.fromJson(Map<String, dynamic> json) {
+    return Pagination(
+      json['current_page'] as int,
+      json['last_page'] as int,
+      json['total'] as int,
     );
   }
 }

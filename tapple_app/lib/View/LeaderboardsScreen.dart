@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Model/LeaderboardsObjectModel.dart';
-import 'package:tappleapp/Model/LeaderboardsObjectModel.dart';
 import 'package:tappleapp/Controller/LeaderboardsNetworkController.dart';
-import 'package:flip_card/flip_card.dart';
-import 'package:tappleapp/Controller/xpToLevelsConverter.dart';
-import 'package:intl/intl.dart';
-
 import 'StatsViewScreen.dart';
 
 class LeaderboardsScreen extends StatefulWidget {

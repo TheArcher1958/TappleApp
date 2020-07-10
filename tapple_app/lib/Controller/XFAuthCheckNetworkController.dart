@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 
 Future<LoginResponse> fetchUserFromLogin(username, password) async {
   var response = await http.post('https://tapple.world/api/auth/',
-      body: {
-    'login': username, 'password': password
-  },
+    body: {
+      'login': username, 'password': password
+    },
     headers: {
       "XF-Api-Key": API_KEY,
     },

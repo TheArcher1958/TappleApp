@@ -14,6 +14,43 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  Future<void> _showLogoutScreen() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Tapple Account', style: TextStyle(fontSize: 25),),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Do you really want to sign out of your account?', style: TextStyle(fontFamily: "Roberto"),),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Sign Out'),
+              onPressed: () async {
+                globalUser = null;
+                await storage.delete(key: "tappleUsername");
+                await storage.delete(key: "tapplePassword");
+                Navigator.pushReplacementNamed(context, "/loading");
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -82,26 +119,33 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       drawer: Drawer(
-
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/tappleBackground.png"),
-                fit: BoxFit.cover,
+            InkWell(
+              onTap: () {
+                if(globalUser != null) {
+                  Navigator.pop(context);
+                  _showLogoutScreen();
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/login");
+                }
+              },
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/tappleBackground.png"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                //color: Color(0xffff0e19),
-              ),
-
-              child: Text(
-                'Tapple',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+                accountName: Text(globalUser != null ? globalUser.username : "     Sign In", style: TextStyle(color: globalUser != null ? Colors.black : Colors.white),),
+                accountEmail: Text(globalUser != null ? globalUser.user_title : ""),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: (globalUser != null ? (globalUser.avatar_urls["l"] != null ? NetworkImage(globalUser.avatar_urls["l"]) : NetworkImage("https://eu.ui-avatars.com/api/?name=${globalUser.username}")) : AssetImage("assets/emptyPersonIcon.jpg")),
+                  ),
                 ),
-              ),
             ),
+
             ListTile(
               leading: Icon(Icons.show_chart),
               title: Text('Player Stats'),
@@ -139,8 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('Settings'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LoginScreen()));
-                //Navigator.pushNamed(context, "/login");
               },
             ),
           ],

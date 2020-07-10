@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
 
@@ -28,7 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         print(result.user.username);
         _saveLoginDetails(storage, username, password);
-        Navigator.pop(ctx);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/loading', (Route<dynamic> route) => false);
+
       };
     });
   }
@@ -58,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             clipper: CustomHalfCircleClipper(),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.25,
               color: Color(0xffFE7615),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -120,15 +124,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          FlatButton(
-            onPressed: () {},
-            textColor: Colors.grey,
-            child: Text('Forgot Password',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-          ),
+//          FlatButton(
+//            onPressed: () {},
+//            textColor: Colors.grey,
+//            child: Text('Forgot Password',
+//              style: TextStyle(
+//                fontSize: 12,
+//              ),
+//            ),
+//          ),
           SizedBox(
             height: 20,
           ),
@@ -137,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Color(0xffFE7615),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.8),
+                  color: Colors.black.withOpacity(0.6),
                   offset: Offset(0.0, 2.0),
                   blurRadius: 3.0,
                   spreadRadius: 3.0,
@@ -152,7 +156,43 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.white,
                 onPressed: () {
                   _handleLoginRequest(_userController.text, _passController.text, context);
-                  //print(response);
+                },
+                color: Color(0xffFE7615),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Or",
+            style: TextStyle(
+            fontFamily: "UniSansHeavy",
+            ),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xffFE7615),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.6),
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 3.0,
+                  spreadRadius: 3.0,
+                )
+              ],
+            ),
+            child: SizedBox(
+              height: 45,
+              width: 200,
+              child: RaisedButton(
+                child: const Text('Register', style: TextStyle(fontSize: 25)),
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, "/register");
                 },
                 color: Color(0xffFE7615),
               ),

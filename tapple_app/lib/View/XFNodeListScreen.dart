@@ -110,12 +110,12 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
 
                               children: <Widget>[
-                                Text("${data[index].type_data.last_thread_title}",
+                                Text(data[index].type_data.last_thread_title == null ? "" :"${data[index].type_data.last_thread_title}",
                                   overflow: TextOverflow.ellipsis,
                                   style: new TextStyle(
                                     fontSize: 13.0,
                                   ),),
-                                Text("${data[index].type_data.last_post_username} ${String
+                                Text(data[index].type_data.last_post_date == null ? "" : "${data[index].type_data.last_post_username} ${String
                                     .fromCharCode($bull)} ${_toRecase(
                                     timeago.format(
                                         DateTime.fromMillisecondsSinceEpoch(

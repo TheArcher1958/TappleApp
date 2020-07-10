@@ -32,12 +32,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
           if(userResponse == null) {
             _deleteLogin(storage);
           } else {
-            print(userResponse.user.username);
             globalUser = userResponse.user;
           }
         });
       } else {
-        print("No user saved!");
       }
       Navigator.pushReplacement(context, MaterialPageRoute<void>(
         builder: (BuildContext context) {

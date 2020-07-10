@@ -3,8 +3,8 @@ import 'XFNodeListObjectModel.dart';
 class NodeResponse {
   final List<Thread> threads;
   final List<Thread> sticky;
-  //final Pagination pagination;
-  NodeResponse(this.sticky,this.threads);
+  final Pagination pagination;
+  NodeResponse(this.sticky,this.threads, this.pagination);
   factory NodeResponse.fromJson(Map<String, dynamic> json) {
     var threadsJson = json['threads'] as List;
     List<Thread> _tagsThreads = threadsJson.map((tagJson) => Thread.fromJson(tagJson))
@@ -15,6 +15,7 @@ class NodeResponse {
     return NodeResponse(
       _tagsSticky,
       _tagsThreads,
+      Pagination.fromJson(json['pagination']),
     );
   }
 }
@@ -95,6 +96,21 @@ class User {
       json['register_date'] as int,
       json['signature'] as String,
       json['user_state'] as String,
+    );
+  }
+}
+
+class Pagination {
+  final int current_page;
+  final int last_page;
+  final int total;
+
+  Pagination(this.current_page,this.last_page,this.total);
+  factory Pagination.fromJson(Map<String, dynamic> json) {
+    return Pagination(
+      json['current_page'] as int,
+      json['last_page'] as int,
+      json['total'] as int,
     );
   }
 }
