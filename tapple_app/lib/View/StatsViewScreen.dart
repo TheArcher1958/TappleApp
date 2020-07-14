@@ -77,6 +77,16 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
     });
   }
 
+  double getWinLoss(wins, losses) {
+    if(losses == 0 && wins == 0) {
+      return 0;
+    } else if(wins / losses == double.infinity) {
+      return 1;
+    } else {
+      return wins / losses;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if(data == null) return Container(
@@ -103,69 +113,78 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
               direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 155,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   child: Card(
                     elevation: 4,
                     child: Row(
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 8, 0, 8),
-                                child: Image.network("https://crafatar.com/avatars/${data.response.uuid}"),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5,0,0,0),
+                        Container(
+                          width: MediaQuery.of(context).size.height * 0.125,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("Rank:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
-                              Text("Discord:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
-                              Text("First Login:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
-                              Text("Level:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
-                              Text("Time Played:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
-                              Text("Total XP:", style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),),
+                              SizedBox(
+                                //height: 90,
+                                //width: 900,
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(5, 8, 0, 8),
+                                  child: Image.network("https://crafatar.com/avatars/${data.response.uuid}"),
+                                ),
+                              ),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("${rankNames[data.response.rank]}", style: TextStyle(fontSize: 17, color: Color(int.parse("0xff${rankColors[data.response.rank]}"))),),
-                              Text("${data.response.discordName}#${data.response.discriminator}", style: TextStyle(fontSize: 17),),
-                              Text("${DateFormat.yMMMd().format(new DateTime.fromMillisecondsSinceEpoch(data.response.timestampFirstJoined))}", style: TextStyle(fontSize: 17),),
-                              Text("${getLevelInfo(data.response.totalxp).levelAndFraction.toStringAsFixed(2)}", style: TextStyle(fontSize: 17),), // TODO: Add formula to convert xp to levels
-                              Text("${(data.response.timeplayedMiliseconds / 360000).toStringAsFixed(2)} hr", style: TextStyle(fontSize: 17),),
-                              Text("${data.response.totalxp.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(fontSize: 17),),
-                            ],
+                          padding: const EdgeInsets.fromLTRB(5,0,0,0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.height * 0.14,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("Rank:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                                Text("Discord:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                                Text("First Login:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                                Text("Level:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                                Text("Time Played:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                                Text("Total XP:", style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("${rankNames[data.response.rank]}", style: TextStyle(fontSize: 16, color: Color(int.parse("0xff${rankColors[data.response.rank]}"))),),
+                                Text("${data.response.discordName}#${data.response.discriminator}", style: TextStyle(fontSize: 16),overflow: TextOverflow.ellipsis,),
+                                Text("${DateFormat.yMMMd().format(new DateTime.fromMillisecondsSinceEpoch(data.response.timestampFirstJoined))}", style: TextStyle(fontSize: 16),),
+                                Text("${getLevelInfo(data.response.totalxp).levelAndFraction.toStringAsFixed(2)}", style: TextStyle(fontSize: 16),), // TODO: Add formula to convert xp to levels
+                                Text("${(data.response.timeplayedMiliseconds / 360000).toStringAsFixed(2)} hr", style: TextStyle(fontSize: 16),),
+                                Text("${data.response.totalxp.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(fontSize: 16),),
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -178,7 +197,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 155,
+                    height: MediaQuery.of(context).size.height * 0.25,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -244,7 +263,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.casualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.casualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.casualWins / data.response.casualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.casualWins, data.response.casualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.casualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.casualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -297,7 +316,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.competitiveWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.competitiveLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.competitiveWins / data.response.competitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.competitiveWins, data.response.competitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.competitiveWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.competitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -334,7 +353,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 195,
+                  height: MediaQuery.of(context).size.height * 0.27,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -393,7 +412,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
 
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -428,7 +447,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     children: <Widget>[
                                       Text("${data.response.builduhcCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.builduhcCasualWins / data.response.builduhcCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.builduhcCasualWins, data.response.builduhcCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -474,14 +493,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text("${data.response.builduhcCompetitiveWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCompetitiveLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.builduhcCompetitiveWins / data.response.builduhcCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.builduhcCompetitiveWins, data.response.builduhcCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.builduhcCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -503,7 +522,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 195,
+                    height: MediaQuery.of(context).size.height * 0.27,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -564,7 +583,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   children: <Widget>[
 
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                      padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
@@ -599,7 +618,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.archerCasualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCasualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.archerCasualWins / data.response.archerCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.archerCasualWins, data.response.archerCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -645,14 +664,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text("${data.response.archerCompetitiveWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCompetitiveLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.archerCompetitiveWins / data.response.archerCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.archerCompetitiveWins, data.response.archerCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.archerCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -697,7 +716,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 195,
+                  height: MediaQuery.of(context).size.height * 0.27,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -756,7 +775,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
 
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -791,7 +810,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     children: <Widget>[
                                       Text("${data.response.potionCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.potionCasualWins / data.response.potionCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.potionCasualWins, data.response.potionCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -837,14 +856,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text("${data.response.potionCompetitiveWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCompetitiveLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.potionCompetitiveWins / data.response.potionCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.potionCompetitiveWins, data.response.potionCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.potionCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -866,7 +885,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 195,
+                    height: MediaQuery.of(context).size.height * 0.27,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -929,7 +948,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   children: <Widget>[
 
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                      padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
@@ -964,7 +983,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.comboCasualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.comboCasualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.comboCasualWins / data.response.comboCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.comboCasualWins, data.response.comboCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.comboCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.comboCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -1010,14 +1029,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text("${data.response.sgCasualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.sgCasualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.sgCasualWins / data.response.sgCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.sgCasualWins, data.response.sgCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.sgCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.sgCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -1060,7 +1079,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 195,
+                  height: MediaQuery.of(context).size.height * 0.27,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -1121,7 +1140,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
 
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -1156,7 +1175,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     children: <Widget>[
                                       Text("${data.response.skywarsCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.skywarsCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.skywarsCasualWins / data.response.skywarsCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.skywarsCasualWins, data.response.skywarsCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.skywarsCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.skywarsCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -1202,14 +1221,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text("${data.response.soupCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.soupCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.soupCasualWins / data.response.soupCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.soupCasualWins, data.response.soupCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.soupCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.soupCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -1231,7 +1250,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
                 back: Container(
                   child: Container(
-                    height: 195,
+                    height: MediaQuery.of(context).size.height * 0.27,
                     child: Card(
                       elevation: 4,
                       child: Padding(
@@ -1292,7 +1311,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   children: <Widget>[
 
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                      padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
@@ -1327,7 +1346,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.parkourCasualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCasualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.parkourCasualWins / data.response.parkourCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.parkourCasualWins, data.response.parkourCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -1373,14 +1392,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text("${data.response.parkourCompetitiveWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCompetitiveLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.parkourCompetitiveWins / data.response.parkourCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.parkourCompetitiveWins, data.response.parkourCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.parkourCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -1424,7 +1443,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL, // default
                 front: Container(
-                  height: 195,
+                  height: MediaQuery.of(context).size.height * 0.27,
                   child: Card(
                     elevation: 4,
                     child: Column(
@@ -1485,7 +1504,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
 
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -1520,7 +1539,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     children: <Widget>[
                                       Text("${data.response.sumoCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.sumoCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.sumoCasualWins / data.response.sumoCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.sumoCasualWins, data.response.sumoCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.sumoCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.sumoCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -1566,14 +1585,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text("${data.response.spleefCasualWins}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.spleefCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${(data.response.spleefCasualWins / data.response.spleefCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.spleefCasualWins, data.response.spleefCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.spleefCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                       Text("${data.response.spleefCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
@@ -1671,7 +1690,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                         children: <Widget>[
                                           Text("${data.response.horseCasualWins}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.horseCasualLosses}", style: TextStyle(fontSize: 17),),
-                                          Text("${(data.response.horseCasualWins / data.response.horseCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                          Text("${getWinLoss(data.response.horseCasualWins, data.response.horseCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.horseCasualWinstreak}", style: TextStyle(fontSize: 17),),
                                           Text("${data.response.horseCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                         ],
@@ -1689,14 +1708,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                 ),
               ),
             ),
-
-
-
-
-
-
-
-
           ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tappleapp/View/RegisterScreen.dart';
 import 'package:tappleapp/View/StatsViewScreen.dart';
 import 'View/LoadingScreen.dart';
 import 'View/LoginScreen.dart' as LoginScreen;
@@ -8,8 +9,9 @@ void main() => runApp(MaterialApp(
   home: LoadingScreen(),
   routes: {
     //'/homeTab': (context) => FirstScreen(),
-    //'/playerStats': (context) => StatsViewScreen(),
-
+    '/loading': (context) => LoadingScreen(),
+    '/login': (context) => LoginScreen.LoginScreen(),
+    '/register': (context) => RegisterScreen(),
   },
     theme: ThemeData(
       // Define the default brightness and colors.
