@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 
 
 Future<NodeResponse> fetchThreads(int id, int page) async {
-  print(globalUser.user_id);
   final response = await http.get(
     'https://tapple.world/api/forums/${id}/threads?page=${page}',
     headers: {"XF-Api-Key": API_KEY,

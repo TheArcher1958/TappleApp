@@ -60,43 +60,45 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
         )
     );
     return Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
-          child: new ListView.builder
-            (
-              itemCount: data.length,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFThreadListScreen(data[index])));
-                  },
-                  child: Container(
-                    height: 70,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        top: BorderSide(width: 0.5, color: Color(
-                            0xFFFFDFDFDF)),
-                        bottom: BorderSide(width: 0.5, color: Color(
-                            0xFFFFDFDFDF)),
-                      ),
+        child: new ListView.builder
+          (
+            itemCount: data.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFThreadListScreen(data[index])));
+                },
+                child: Container(
+
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: (index % 2) == 0 ? Color(0xff484d56) : Color(0xff3D4148),
+                    border: Border(
+                      top: BorderSide(width: 0.5, color: Color(
+                          0xFFFFDFDFDF)),
+                      bottom: BorderSide(width: 0.5, color: Color(
+                          0xFFFFDFDFDF)),
                     ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.start,
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          width: 220,
+                          width: MediaQuery.of(context).size.width * 0.45,
                           child: Text("${data[index].title}",
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.fade,
                             style: new TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 15.0,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.bold,
                             ),),
                         ),
-                        SizedBox(width: 0,),
+                        SizedBox(height: 0,),
                         Container(
-                          width: 178,
+                          width: MediaQuery.of(context).size.width * 0.50,
                           decoration: const BoxDecoration(
                             border: Border(
                               left: BorderSide(
@@ -111,17 +113,18 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
 
                               children: <Widget>[
                                 Text(data[index].type_data.last_thread_title == null ? "" :"${data[index].type_data.last_thread_title}",
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: TextOverflow.fade,
                                   style: new TextStyle(
                                     fontSize: 13.0,
                                   ),),
+                                SizedBox(height: 5,),
                                 Text(data[index].type_data.last_post_date == null ? "" : "${data[index].type_data.last_post_username} ${String
                                     .fromCharCode($bull)} ${_toRecase(
                                     timeago.format(
                                         DateTime.fromMillisecondsSinceEpoch(
                                             data[index].type_data.last_post_date *
                                                 1000)))}",
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: TextOverflow.fade,
                                   style: new TextStyle(
                                     fontSize: 13.0,
                                   ),),
@@ -133,9 +136,9 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
 
                     ),
                   ),
-                );
-              }
-          ),
+                ),
+              );
+            }
         )
     );
   }

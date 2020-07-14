@@ -51,63 +51,65 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
         centerTitle: true,
       ),
       body: Builder(
-        builder: (context) =>Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              SizedBox(height: 2,),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                  child: TextFormField(
-                    validator: (String value) {
-                      if (value.trim().isEmpty) {
-                        return 'Title may not be blank';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: _titleController,
-                    style: TextStyle(
-                      fontFamily: "Roberto",
+        builder: (context) =>SingleChildScrollView(
+          child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                SizedBox(height: 2,),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                    child: TextFormField(
+                      validator: (String value) {
+                        if (value.trim().isEmpty) {
+                          return 'Title may not be blank';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: _titleController,
+                      style: TextStyle(
+                        fontFamily: "Roberto",
+                      ),
+                      maxLines: 1,
+                      decoration: InputDecoration(hintText: "Thread title...",border: OutlineInputBorder(),),
                     ),
-                    maxLines: 1,
-                    decoration: InputDecoration(hintText: "Thread title...",border: OutlineInputBorder(),),
                   ),
                 ),
-              ),
-              SizedBox(height: 15,),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    validator: (String value) {
-                      if (value.trim().isEmpty) {
-                        return 'Message may not be blank';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: _messageController,
-                    style: TextStyle(
-                      fontFamily: "Roberto",
+                SizedBox(height: 15,),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      validator: (String value) {
+                        if (value.trim().isEmpty) {
+                          return 'Message may not be blank';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: _messageController,
+                      style: TextStyle(
+                        fontFamily: "Roberto",
+                      ),
+                      maxLines: 12,
+                      decoration: InputDecoration(hintText: "Write your message...",border: OutlineInputBorder(),),
                     ),
-                    maxLines: 12,
-                    decoration: InputDecoration(hintText: "Write your message...",border: OutlineInputBorder(),),
                   ),
                 ),
-              ),
-              RaisedButton(
-                onPressed: _submit,
-                color: Color(0xffff0e19),
-                child: Text("Post Reply"),
-              ),
-            ],
+                RaisedButton(
+                  onPressed: _submit,
+                  color: Color(0xffff0e19),
+                  child: Text("Create Thread"),
+                ),
+              ],
+            ),
           ),
-        ),
+          ),
         ),
       ),
     );

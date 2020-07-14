@@ -105,7 +105,7 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                   controller: _homeController,
                   itemCount: data.threads.length + 2,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    if(index == 0 && globalUser != null) {
+                    if(index == 0) {
                       return Container(
                         child: RaisedButton(
                           onPressed: globalUser == null ? null : () {
@@ -176,7 +176,7 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                                       width: 0.5, color: Color(0xFFFF7F7F7F)),
                                 ),
                               ),
-                              width: 220,
+                              width: MediaQuery.of(context).size.width * 0.51,
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Column(

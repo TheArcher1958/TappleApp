@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tappleapp/Controller/TestNetworkRequest.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
+import 'package:tappleapp/View/SettingsPage.dart';
 import '../Globals.dart';
 import 'LoginScreen.dart';
 import 'PlayerStatsSearch.dart';
@@ -96,14 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var listOfScreens = [
     Container(
-      child: Text('Hey'),
+      child: Text('Welcome'),
     ),
     PlayerStatsSearch(),
     LeaderboardsListScreen(),
     XFNodeListScreen(),
-    LoginScreen(),
+    SettingsPage(),
   ];
-  var pageIndex = 0;
+  var pageIndex = 3;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -112,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           'Tapple',
           style: TextStyle(
-            color: Colors.white
+            color: Colors.black
           ),
         ),
         backgroundColor: Color(0xffFE7615),
@@ -182,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
+                testNetworkRequest();
                 Navigator.of(context).pop();
+                _toggleScreen(4, context);
               },
             ),
           ],
