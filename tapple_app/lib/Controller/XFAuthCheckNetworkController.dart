@@ -5,17 +5,18 @@ import '../SensitiveCredentials.dart';
 import 'package:http/http.dart' as http;
 
 
+
+
 Future<LoginResponse> fetchUserFromLogin(username, password) async {
-  var response = await http.post('https://tapple.world/api/auth/',
+
+  final response = await http.post(
+    //'https://tapple.world/archers_testing/mobile/mobileReadFromForums.php',
+    'https://tapple.world/archers_testing/mobile/authentication.php',
     body: {
-      'login': username, 'password': password
-    },
-    headers: {
-      "XF-Api-Key": API_KEY_POST,
+      'XF-Username': username, 'XF-Password': password,
     },
   );
 
-  //print(response.body);
   final responseJson = json.decode(response.body);
   if(responseJson["success"] == true && responseJson["error"] == null) {
     return LoginResponse.fromJson(responseJson);

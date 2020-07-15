@@ -26,7 +26,6 @@ Future<ThreadPosts> fetchPosts(int id, int page) async {
       },
     );
   }
-  print(response.body);
   final responseJson = json.decode(response.body);
   return ThreadPosts.fromJson(responseJson);
 }
