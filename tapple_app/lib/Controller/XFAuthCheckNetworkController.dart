@@ -11,7 +11,7 @@ Future<LoginResponse> fetchUserFromLogin(username, password) async {
       'login': username, 'password': password
     },
     headers: {
-      "XF-Api-Key": API_KEY,
+      "XF-Api-Key": API_KEY_POST,
     },
   );
 
