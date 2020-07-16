@@ -1,9 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tappleapp/Controller/TestNetworkRequest.dart';
+import 'package:tappleapp/View/EventsScreen.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
 import 'package:tappleapp/View/SettingsPage.dart';
 import '../Globals.dart';
-import 'LoginScreen.dart';
 import 'PlayerStatsSearch.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'XFNodeListScreen.dart';
@@ -93,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _toggleScreen(num,ctx) {
     setState(() {
       pageIndex = num;
+      titleIndex = num;
     });
   }
 
@@ -104,7 +105,17 @@ class _HomeScreenState extends State<HomeScreen> {
     LeaderboardsListScreen(),
     XFNodeListScreen(),
     SettingsPage(),
+    EventsScreen(),
   ];
+  var listOfTitles = [
+    "Tapple",
+    "Player Stats",
+    "Leaderboards",
+    "Forums",
+    "Settings",
+    "Events",
+  ];
+  var titleIndex = 3;
   var pageIndex = 3;
   @override
   Widget build(BuildContext context) {
@@ -112,11 +123,12 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
-          'Tapple',
+          listOfTitles[titleIndex],
           style: TextStyle(
             color: Colors.black
           ),
         ),
+        centerTitle: true,
         backgroundColor: Color(0xffFE7615),
       ),
 
@@ -165,6 +177,14 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.event),
+              title: Text('Events'),
+              onTap: () {
+                _toggleScreen(5,context);
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.forum),
               title: Text('Forums'),
               onTap: () {
@@ -184,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
-                testNetworkRequest();
+                //testNetworkRequest();
                 Navigator.of(context).pop();
                 _toggleScreen(4, context);
               },

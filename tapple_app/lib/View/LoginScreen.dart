@@ -42,6 +42,13 @@ class _LoginScreenState extends State<LoginScreen> {
   var _userController = TextEditingController();
   var _passController = TextEditingController();
 
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _userController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
+
   void _toggleVisibility() {
     setState(() {
       _hidePasswordText = !_hidePasswordText;

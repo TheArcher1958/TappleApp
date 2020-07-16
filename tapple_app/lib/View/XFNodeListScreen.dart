@@ -33,7 +33,7 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
     fetchNodes().then((CategoryList result){
       List<Node> forumList = [];
       result.nodes.forEach((node) {
-        if(node.node_type_id == "Forum" && node.display_in_list == true) {
+        if(node.node_type_id == "Forum" && node.display_in_list == true && node.title != "Applications") {
           forumList.add(node);
         }
       });

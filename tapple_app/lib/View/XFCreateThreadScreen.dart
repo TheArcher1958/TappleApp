@@ -15,6 +15,14 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _messageController.dispose();
+    _titleController.dispose();
+    super.dispose();
+  }
+
+
   void postNewReply(message,title) async {
     await postThread(widget.nodeID, title, message).then((bool success){
       print(success.toString());

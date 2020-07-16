@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tappleapp/View/HomeScreen.dart';
 import 'package:tappleapp/View/StatsViewScreen.dart';
 
 class PlayerStatsSearch extends StatefulWidget {

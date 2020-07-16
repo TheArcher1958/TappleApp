@@ -9,7 +9,7 @@ class NodeResponse {
     var threadsJson = json['threads'] as List;
     List<Thread> _tagsThreads = threadsJson.map((tagJson) => Thread.fromJson(tagJson))
         .toList();
-    var stickyJson = json['threads'] as List;
+    var stickyJson = json['sticky'] as List;
     List<Thread> _tagsSticky = stickyJson.map((tagJson) => Thread.fromJson(tagJson))
         .toList();
     return NodeResponse(
@@ -35,13 +35,15 @@ class Thread {
   final int last_post_date;
   final int last_post_id;
   final String discussion_state;
+  final bool discussion_open;
   final bool sticky;
   final Node node;
   final String prefix;
-  Thread(this.last_post_date,this.title,this.last_post_id,this.node_id,this.username,this.can_edit,this.can_reply,this.discussion_state,
+  Thread(this.discussion_open,this.last_post_date,this.title,this.last_post_id,this.node_id,this.username,this.can_edit,this.can_reply,this.discussion_state,
       this.node,this.post_date,this.prefix,this.reply_count,this.sticky,this.thread_id,this.user,this.user_id,this.view_count);
   factory Thread.fromJson(Map<String, dynamic> json) {
     return Thread(
+      json['discussion_open'] as bool,
       json['last_post_date'] as int,
       json['title'] as String,
       json['last_post_id'] as int,

@@ -20,6 +20,12 @@ class _XFPostListScreenState extends State<XFPostListScreen> {
   final ScrollController _homeController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _replyController.dispose();
+    _homeController.dispose();
+    super.dispose();
+  }
 
 
   String _filterMessage(message) {
@@ -131,7 +137,7 @@ class _XFPostListScreenState extends State<XFPostListScreen> {
                   var paginationList = [
                     for(var i = 0; i < data.pagination.last_page; i += 1) i
                   ];
-                  if (index == data.posts.length && globalUser != null) {
+                  if (index == data.posts.length && globalUser != null && widget.parentThread.discussion_open == true) {
                     return Column(
                       children: <Widget>[
                         Row(
@@ -224,6 +230,43 @@ class _XFPostListScreenState extends State<XFPostListScreen> {
                           ),
                         ),
                         SizedBox(height: 10,),
+                      ],
+                    );
+                  } else if (index == data.posts.length && globalUser != null && widget.parentThread.discussion_open == false) {
+                    return Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            for(var item in paginationList ) Container(
+                              width: 50,
+                              child: FlatButton(
+                                onPressed: data.pagination.current_page ==
+                                    item + 1 ? () {} : () {
+                                  setState(() {
+                                    data = null;
+                                  });
+                                  getPostList(
+                                      widget.parentThread.thread_id, item + 1);
+                                  _homeController.animateTo(
+                                    0.0,
+                                    curve: Curves.easeOut,
+                                    duration: const Duration(milliseconds: 300),
+                                  );
+                                },
+                                child: Text((item + 1).toString(),
+                                  style: TextStyle(
+                                    color: data.pagination.current_page ==
+                                        item + 1 ? Colors.red : Colors
+                                        .white,),),
+                                color: Color(0xff383c42),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Text("This thread is not open for further replies.",style: TextStyle(fontFamily: "UniSansHeavy"),),
+                        SizedBox(height: 15,),
                       ],
                     );
                   } else if (index == data.posts.length && globalUser == null) {

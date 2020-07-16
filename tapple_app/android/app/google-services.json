@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "930597125548",
+    "firebase_url": "https://eventspage-6bfe2.firebaseio.com",
+    "project_id": "eventspage-6bfe2",
+    "storage_bucket": "eventspage-6bfe2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930597125548:android:ce9d280aafd3d07ac80e09",
+        "android_client_info": {
+          "package_name": "com.joshgimenes.tappleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930597125548-o9gqi585vm349rtgj4jkp8f2hq6pe4ak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTsyrQm9sp6xUYQGlJMw2l1pM36viU5S0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930597125548-o9gqi585vm349rtgj4jkp8f2hq6pe4ak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "930597125548-3ksd6a9d17fjv6cdjc84pnnmnn990b00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.joshgimenes.tappleapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

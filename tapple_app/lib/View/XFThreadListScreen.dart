@@ -89,8 +89,9 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
           child: CircularProgressIndicator(),
         )
     );
+    var threadListWithStickys = [...data.sticky, ...data.threads];
     var paginationList = [for(var i=0; i<data.pagination.last_page; i+=1) i];
-    if (data.threads.length > 0) {
+    if (threadListWithStickys.length > 0) {
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -103,7 +104,7 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
               child: new ListView.builder
                 (
                   controller: _homeController,
-                  itemCount: data.threads.length + 2,
+                  itemCount: threadListWithStickys.length + 2,
                   itemBuilder: (BuildContext ctxt, int index) {
                     if(index == 0) {
                       return Container(
@@ -115,7 +116,7 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                           child: Text("Create Thread"),
                         ),
                       );
-                    } else if(index == data.threads.length + 1) {
+                    } else if(index == threadListWithStickys.length + 1) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
@@ -143,7 +144,7 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                     }
                     return InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFPostListScreen(data.threads[index - 1])));
+                        Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFPostListScreen(threadListWithStickys[index - 1])));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -162,8 +163,8 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: CircleAvatar(backgroundImage: NetworkImage(
                                   getAvatarURL(
-                                      data.threads[index - 1].user.avatar_urls["l"],
-                                      data.threads[index - 1].user.username)),
+                                      threadListWithStickys[index - 1].user.avatar_urls["l"],
+                                      threadListWithStickys[index - 1].user.username)),
                                 radius: 30,),
                             ),
                             SizedBox(width: 0,),
@@ -183,18 +184,18 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
 
                                   children: <Widget>[
-                                    Text(data.threads[index - 1].title,
+                                    Text(threadListWithStickys[index - 1].title,
                                       overflow: TextOverflow.ellipsis,
                                       style: new TextStyle(
                                         fontSize: 14.0,
                                         fontFamily: 'Roboto',
                                         fontWeight: FontWeight.bold,
                                       ),),
-                                    Text("${data.threads[index - 1].username} ${String
+                                    Text("${threadListWithStickys[index - 1].username} ${String
                                         .fromCharCode($bull)} ${_toRecase(
                                         timeago.format(
                                             DateTime.fromMillisecondsSinceEpoch(
-                                                data.threads[index - 1].post_date *
+                                                threadListWithStickys[index - 1].post_date *
                                                     1000)))}",
                                       overflow: TextOverflow.ellipsis,
                                       style: new TextStyle(
@@ -210,9 +211,9 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
 
                             Column(
                               children: <Widget>[
-                                Text("Replies: ${data.threads[index - 1]
+                                Text("Replies: ${threadListWithStickys[index - 1]
                                     .reply_count}"),
-                                Text("Views: ${data.threads[index - 1].view_count}"),
+                                Text("Views: ${threadListWithStickys[index - 1].view_count}"),
                               ],
                             ),
                           ],
