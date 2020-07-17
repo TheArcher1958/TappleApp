@@ -2,15 +2,17 @@
 
 class CategoryList {
   final List<Node> nodes;
-
-  CategoryList(this.nodes);
+  final Map tree_map;
+  CategoryList(this.nodes,this.tree_map);
 
   factory CategoryList.fromJson(dynamic json) {
     var tagObjsJson = json['nodes'] as List;
     List<Node> _categoryTags = tagObjsJson.map((tagJson) => Node.fromJson(tagJson))
         .toList();
+
     return CategoryList(
-      _categoryTags
+      _categoryTags,
+      json['tree_map'] as Map<String, dynamic>,
     );
   }
 }

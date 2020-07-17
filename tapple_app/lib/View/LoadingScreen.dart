@@ -1,10 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
 import 'package:tappleapp/Globals.dart';
 import 'HomeScreen.dart' as HomeScreen;
-
-
 
 
 class LoadingScreen extends StatefulWidget {
@@ -13,6 +11,16 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds:3), () {
+      checkForLogin(storage);
+    });
+
+  }
 
   Future<List<dynamic>> getLogin(storage) async {
     var tapUser = await storage.read(key: "tappleUsername");
@@ -47,13 +55,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds:3), () {
-      checkForLogin(storage);
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {

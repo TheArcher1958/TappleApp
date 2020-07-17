@@ -26,7 +26,9 @@ Future<CategoryList> fetchNodes() async {
       },
     );
   }
+  print(response.body);
   final responseJson = json.decode(response.body);
+  print(CategoryList.fromJson(responseJson).tree_map["0"]);
   return CategoryList.fromJson(responseJson);
 }
 

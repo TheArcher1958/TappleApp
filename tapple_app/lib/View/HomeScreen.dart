@@ -1,5 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:io' show Platform;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tappleapp/View/EventsScreen.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
 import 'package:tappleapp/View/SettingsPage.dart';
@@ -14,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //final FirebaseDatabase _db = FirebaseDatabase.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+  StreamSubscription iosSubscription;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<void> _showLogoutScreen() async {
@@ -73,6 +79,63 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     )
     });
+    if (Platform.isIOS) {
+      iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
+        // save the token  OR subscribe to a topic here
+      });
+
+      _fcm.requestNotificationPermissions(IosNotificationSettings());
+    }
+
+
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Unsubscribe'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    setState(() {
+                      pageIndex = 4;
+                      titleIndex = 4;
+                    });
+                  });
+                },
+              ),
+              FlatButton(
+                child: Text('View'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    setState(() {
+                      pageIndex = 5;
+                      titleIndex = 5;
+                    });
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // TODO optional
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // TODO optional
+      },
+    );
   }
 
 

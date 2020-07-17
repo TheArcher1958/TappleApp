@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tappleapp/View/RegisterScreen.dart';
@@ -8,6 +9,7 @@ import 'dart:io' show Platform;
 
 
 void main() async {
+  SharedPreferences.setMockInitialValues({"eventNot": true});
   WidgetsFlutterBinding.ensureInitialized();
   final FirebaseApp app = await FirebaseApp.configure(
     options: Platform.isIOS
@@ -56,3 +58,6 @@ void main() async {
       )
   ));
 }
+
+
+
