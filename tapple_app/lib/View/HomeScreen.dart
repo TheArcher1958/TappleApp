@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tappleapp/View/EventsScreen.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
 import 'package:tappleapp/View/SettingsPage.dart';
+import 'package:tappleapp/View/styling.dart';
 import '../Globals.dart';
 import 'PlayerStatsSearch.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -167,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
     PlayerStatsSearch(),
     LeaderboardsListScreen(),
     XFNodeListScreen(),
+    //XFNodeListScreen2(),
     SettingsPage(),
     EventsScreen(),
   ];
@@ -183,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Colors.transparent,
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(

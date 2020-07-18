@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tappleapp/View/RegisterScreen.dart';
 import 'View/LoadingScreen.dart';
 import 'View/LoginScreen.dart' as LoginScreen;
+import 'package:tappleapp/View/styling.dart';
 import 'dart:io' show Platform;
 
 
@@ -29,6 +30,7 @@ void main() async {
     home: LoadingScreen(),
     routes: {
       //'/homeTab': (context) => FirstScreen(),
+      '/style': (context) => XFNodeListScreen2(),
       '/loading': (context) => LoadingScreen(),
       '/login': (context) => LoginScreen.LoginScreen(),
       '/register': (context) => RegisterScreen(),

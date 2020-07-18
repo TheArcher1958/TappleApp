@@ -37,36 +37,39 @@ class _LeaderboardsListScreenState extends State<LeaderboardsListScreen> {
   @override
   Widget build(BuildContext context) {
     return
-      CustomScrollView(
-        primary: false,
-        slivers: <Widget>[
-          SliverPadding(
-            padding: const EdgeInsets.all(20),
-            sliver: SliverGrid.count(
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: List.generate(leaderboardNames.length, (index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(kitImagePaths[index]),
-                      fit: BoxFit.cover,
+      Container(
+        color: Color(0xff2D3238),
+        child: CustomScrollView(
+          primary: false,
+          slivers: <Widget>[
+            SliverPadding(
+              padding: const EdgeInsets.all(20),
+              sliver: SliverGrid.count(
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                children: List.generate(leaderboardNames.length, (index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(kitImagePaths[index]),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ListTile(
-                    title: Text(leaderboardDisplayNames[index], style: TextStyle(fontSize: 18),),
+                    child: ListTile(
+                      title: Text(leaderboardDisplayNames[index], style: TextStyle(fontSize: 18),),
 
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LeaderboardsScreen(leaderboardNames[index])));
-                    },
-                  ),
-                );
-              }),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LeaderboardsScreen(leaderboardNames[index])));
+                      },
+                    ),
+                  );
+                }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
   }
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Globals.dart';
 
@@ -15,6 +16,21 @@ class _LoginScreenState extends State<LoginScreen> {
     await storage.write(key: "tappleUsername", value: username);
     await storage.write(key: "tapplePassword", value: password);
   }
+
+  _launchRegister(BuildContext context) async {
+    const url = 'https://tapple.world/register';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      final scaffold = Scaffold.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: const Text('Problem Loading Site'),
+        ),
+      );
+    }
+  }
+
 
   _handleLoginRequest(username, password, ctx) async {
     await fetchUserFromLogin(username, password).then((result){
@@ -169,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Login', style: TextStyle(fontSize: 25)),
                   textColor: Colors.white,
                   onPressed: () {
-                    _handleLoginRequest(_userController.text, _passController.text, context);
+                    if(_userController.text != "" && _passController.text != "") {
+                      _handleLoginRequest(_userController.text, _passController.text, context);
+                    }
                   },
                   color: Color(0xffFE7615),
                 ),
@@ -206,12 +224,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Register', style: TextStyle(fontSize: 25)),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/register");
+                    _launchRegister(context);
+                    //Navigator.pushReplacementNamed(context, "/register");
                   },
                   color: Color(0xffFE7615),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 25,
+            ),
           ],
       ),
         ),

@@ -42,65 +42,69 @@ class _SettingsPageState extends State<SettingsPage> {
         )
     );
     final FirebaseMessaging _fcm = FirebaseMessaging();
-    return FutureBuilder(
-        future: eventNot,
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CircularProgressIndicator();
-            default:
-              if (snapshot.hasError) {
-                print(snapshot.error);
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                      child: Divider(thickness: 1,),
-                    ),
-                    ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Event Notifications'),
-
-                          Switch(
-                          value: snapshot.data,
-                          onChanged: (val) {
-                          print("onPressed" + val.toString());
-                          _toggleEventNots(val);
-                          val == true ? _fcm.subscribeToTopic('events') : _fcm.unsubscribeFromTopic('events');
-                          },
-                          ),
-                        ],
+    return Container(
+      color: Color(0xff2D3238),
+      child: FutureBuilder(
+          future: eventNot,
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CircularProgressIndicator();
+              default:
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return ListView(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10,0,10,0),
+                        child: Divider(thickness: 1,),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                      child: Divider(thickness: 1,),
-                    ),
-                    ListTile(
-                      title: Text('App Info'),
-                      onTap: () {
-                        showAboutDialog(
-                          context: context,
-                          applicationIcon: Image.asset("assets/tappleAppIcon.png",width: 60,height: 60,),
-                          applicationVersion: '1.0',
-                          applicationName: 'Tapple',
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                      child: Divider(thickness: 1,),
-                    ),
-                  ],
-                );
-              }
+                      ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Event Notifications'),
+
+                            Switch(
+                            value: snapshot.data,
+                            onChanged: (val) {
+                            print("onPressed" + val.toString());
+                            _toggleEventNots(val);
+                            val == true ? _fcm.subscribeToTopic('events') : _fcm.unsubscribeFromTopic('events');
+                            },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10,0,10,0),
+                        child: Divider(thickness: 1,),
+                      ),
+
+                      ListTile(
+                        title: Text('App Info'),
+                        onTap: () {
+                          showAboutDialog(
+                            context: context,
+                            applicationIcon: Image.asset("assets/tappleAppIcon.png",width: 60,height: 60,),
+                            applicationVersion: '1.0',
+                            applicationName: 'Tapple',
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10,0,10,0),
+                        child: Divider(thickness: 1,),
+                      ),
+                    ],
+                  );
+                }
+            }
           }
-        }
+      ),
     );
   }
 }
