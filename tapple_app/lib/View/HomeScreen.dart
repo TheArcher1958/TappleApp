@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tappleapp/View/EventsScreen.dart';
 import 'package:tappleapp/View/LeaderboardsListScreen.dart';
 import 'package:tappleapp/View/SettingsPage.dart';
-import 'package:tappleapp/View/styling.dart';
 import '../Globals.dart';
 import 'PlayerStatsSearch.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'XFNodeListScreen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -91,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -129,12 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // TODO optional
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        // TODO optional
       },
     );
   }
@@ -168,7 +162,6 @@ class _HomeScreenState extends State<HomeScreen> {
     PlayerStatsSearch(),
     LeaderboardsListScreen(),
     XFNodeListScreen(),
-    //XFNodeListScreen2(),
     SettingsPage(),
     EventsScreen(),
   ];

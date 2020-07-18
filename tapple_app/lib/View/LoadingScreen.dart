@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
 import 'package:tappleapp/Globals.dart';
 import 'HomeScreen.dart' as HomeScreen;
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -16,10 +18,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds:3), () {
+    Future.delayed(Duration(seconds: 1), () {
       checkForLogin(storage);
     });
-
   }
 
   Future<List<dynamic>> getLogin(storage) async {
@@ -35,27 +36,49 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void checkForLogin(storage) async {
-    getLogin(storage).then((List<dynamic> result) async {
-      if(result[0] != null && result[1] != null) {
-        await fetchUserFromLogin(result[0], result[1]).then((userResponse) {
-          if(userResponse == null) {
-            _deleteLogin(storage);
-          } else {
-            globalUser = userResponse.user;
-          }
-        });
-      } else {
-      }
-      Navigator.pushReplacement(context, MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return HomeScreen.HomeScreen();
-        },
-      ),);
-    });
+    final RemoteConfig remoteConfig = await RemoteConfig.instance;
+    await remoteConfig.fetch(expiration: const Duration(hours: 5));
+    await remoteConfig.activateFetched();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    if(remoteConfig.getString('appVersionNumber') == version) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
+            title: Text("A New Update is Available!"),
+            subtitle: Text("Please update the app to continue using it."),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
+    } else {
+      getLogin(storage).then((List<dynamic> result) async {
+        if (result[0] != null && result[1] != null) {
+          await fetchUserFromLogin(result[0], result[1]).then((userResponse) {
+            if (userResponse == null) {
+              _deleteLogin(storage);
+            } else {
+              globalUser = userResponse.user;
+            }
+          });
+        } else {}
+        Navigator.pushReplacement(context, MaterialPageRoute<void>(
+          builder: (BuildContext context) {
+            return HomeScreen.HomeScreen();
+          },
+        ),);
+      });
+    }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

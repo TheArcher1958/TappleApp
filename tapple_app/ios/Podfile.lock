@@ -132,6 +132,8 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
+  - package_info (0.0.1):
+    - Flutter
   - path_provider_linux (0.0.1):
     - Flutter
   - PromisesObjC (1.2.8)
@@ -161,6 +163,7 @@ DEPENDENCIES:
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_linux (from `.symlinks/plugins/shared_preferences_linux/ios`)
@@ -213,6 +216,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
   path_provider_linux:
     :path: ".symlinks/plugins/path_provider_linux/ios"
   shared_preferences:
@@ -259,6 +264,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
