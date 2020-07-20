@@ -1,9 +1,6 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../Globals.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -44,11 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         Scaffold.of(ctx).showSnackBar(snackBar);
       } else {
-        print(result.user.username);
         _saveLoginDetails(storage, username, password);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/loading', (Route<dynamic> route) => false);
-
       };
     });
   }
@@ -59,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
   var _passController = TextEditingController();
 
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     _userController.dispose();
     _passController.dispose();
     super.dispose();
@@ -153,16 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
-//          FlatButton(
-//            onPressed: () {},
-//            textColor: Colors.grey,
-//            child: Text('Forgot Password',
-//              style: TextStyle(
-//                fontSize: 12,
-//              ),
-//            ),
-//          ),
             SizedBox(
               height: 20,
             ),
@@ -225,7 +209,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   textColor: Colors.white,
                   onPressed: () {
                     _launchRegister(context);
-                    //Navigator.pushReplacementNamed(context, "/register");
                   },
                   color: Color(0xffFE7615),
                 ),

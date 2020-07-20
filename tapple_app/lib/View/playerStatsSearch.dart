@@ -8,9 +8,8 @@ class PlayerStatsSearch extends StatefulWidget {
 
 class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
   var _controller = TextEditingController();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
   }
@@ -18,6 +17,7 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         child: Column(
           children: <Widget>[
@@ -41,8 +41,20 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
               child: RaisedButton(
                 child: const Text('Get Stats', style: TextStyle(fontSize: 23)),
                 textColor: Colors.white,
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(_controller.text)));
+                onPressed: () async {
+                  final result = await Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(_controller.text)));
+                  if(result == false) {
+                    _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          backgroundColor: Color(0xff303c42),
+                          content: Text('Player Not Found.',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                    );
+                  }
                 },
                 color: Color(0xffFE7615),
               ),
@@ -53,4 +65,3 @@ class _PlayerStatsSearchState extends State<PlayerStatsSearch> {
     );
   }
 }
-

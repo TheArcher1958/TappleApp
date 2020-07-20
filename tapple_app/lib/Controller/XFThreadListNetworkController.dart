@@ -5,7 +5,6 @@ import 'package:tappleapp/Model/XFThreadListObjectModel.dart';
 import '../SensitiveCredentials.dart';
 import 'package:http/http.dart' as http;
 
-
 Future<NodeResponse> fetchThreads(int id, int page) async {
   var tapUser = await storage.read(key: "tappleUsername");
   var tapPass = await storage.read(key: "tapplePassword");
@@ -27,11 +26,6 @@ Future<NodeResponse> fetchThreads(int id, int page) async {
     );
   }
   final responseJson = json.decode(response.body);
-  //print(NodeResponse.fromJson(responseJson).sticky.length);
-  for(var val in NodeResponse.fromJson(responseJson).sticky) {
-    print(val.discussion_open);
-    //print(val.reply_count);
-  }
   return NodeResponse.fromJson(responseJson);
 }
 

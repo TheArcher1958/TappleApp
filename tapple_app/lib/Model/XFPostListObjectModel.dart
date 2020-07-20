@@ -1,6 +1,5 @@
 import 'XFThreadListObjectModel.dart';
 
-
 class ThreadPosts {
   final List<Post> posts;
   final Pagination pagination;

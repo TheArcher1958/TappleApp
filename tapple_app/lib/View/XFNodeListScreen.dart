@@ -8,14 +8,12 @@ import 'package:timeago/timeago.dart' as timeago;
 
 
 class XFNodeListScreen extends StatefulWidget {
-
   @override
   _XFNodeListScreenState createState() => _XFNodeListScreenState();
 }
 
 class _XFNodeListScreenState extends State<XFNodeListScreen> {
   List<Node> data;
-
 
   String _toRecase(theString) {
     ReCase rc = new ReCase(theString);
@@ -31,7 +29,6 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
 
   void getNodeList() async {
     fetchNodes().then((CategoryList result){
-
       List<Node> forumList = [];
       result.nodes.forEach((node) {
         if((node.node_type_id == "Forum" || node.node_type_id == "Category") && node.display_in_list == true && node.title != "Applications") {
@@ -63,7 +60,6 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
     return Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            //image: NetworkImage("https://i.gyazo.com/8ba500f575cd16de7c7bf1ec0d6059e3.jpg"),
               image: AssetImage("assets/tappleBackground-min.jpg"),
               fit: BoxFit.cover
           ),
@@ -100,7 +96,6 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
                   Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFThreadListScreen(data[index])));
                 },
                 child: Container(
-
                   height: 100,
                   decoration: BoxDecoration(
                     color: Color(0xff3D4148),
@@ -114,8 +109,6 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
                     child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           width: MediaQuery.of(context).size.width * 0.45,
@@ -167,7 +160,6 @@ class _XFNodeListScreenState extends State<XFNodeListScreen> {
                           ),
                         ),
                       ],
-
                     ),
                   ),
                 ),

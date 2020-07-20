@@ -12,12 +12,11 @@ Future<CategoryList> fetchNodes() async {
   var response;
   if(tapUser != null && tapPass != null) {
     response = await http.post(
-      //'https://tapple.world/archers_testing/mobile/mobileReadFromForums.php',
       'https://tapple.world/archers_testing/mobile/readNodes.php',
       body: {
         'XF-Username': tapUser, 'XF-Password': tapPass,
       },
-    );
+    ).timeout(Duration(minutes: 30));
   } else {
     response = await http.get(
       'https://tapple.world/api/nodes/',

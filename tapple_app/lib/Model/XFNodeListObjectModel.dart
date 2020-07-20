@@ -1,5 +1,3 @@
-
-
 class CategoryList {
   final List<Node> nodes;
   final Map tree_map;

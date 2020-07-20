@@ -7,12 +7,11 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:tappleapp/Controller/XFThreadListNetworkController.dart';
 import 'package:tappleapp/Model/XFThreadListObjectModel.dart';
 import 'package:tappleapp/Model/XFNodeListObjectModel.dart';
-
 import 'XFPostListScreen.dart';
 
 
 class XFThreadListScreen extends StatefulWidget {
-  final Node parentNode;//if you have multiple values add here
+  final Node parentNode;
   XFThreadListScreen(this.parentNode, {Key key}): super(key: key);
   @override
   _XFThreadListScreenState createState() => _XFThreadListScreenState();
@@ -22,7 +21,6 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
   NodeResponse data;
   final ScrollController _homeController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
 
   String _toRecase(theString) {
     ReCase rc = new ReCase(theString);
@@ -52,9 +50,6 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
 
   _pushAndAwaitSuccess() async {
     final result = await Navigator.of(context).push(MaterialPageRoute(builder:(context)=>XFCreateThreadScreen(widget.parentNode.node_id)));
-
-    // After the Selection Screen returns a result, hide any previous snackbars
-    // and show the new result.
     if(result == true) {
       _scaffoldKey.currentState.showSnackBar(
           SnackBar(
@@ -117,8 +112,11 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                         ),
                       );
                     } else if(index == threadListWithStickys.length + 1) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      return Wrap(
+                        direction: Axis.horizontal,
+                        spacing: 0,
+                        runSpacing: 0,
+//                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           for(var item in paginationList ) Container(
                             width: 50,
@@ -156,8 +154,6 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                           ),
                         ),
                         child: Row(
-                          //mainAxisAlignment: MainAxisAlignment.start,
-                          //crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -208,7 +204,6 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                               ),
                             ),
                             SizedBox(width: 5,),
-
                             Column(
                               children: <Widget>[
                                 Text("Replies: ${threadListWithStickys[index - 1]
@@ -217,7 +212,6 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
                               ],
                             ),
                           ],
-
                         ),
                       ),
                     );

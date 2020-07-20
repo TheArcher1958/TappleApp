@@ -1,5 +1,3 @@
-// 121 properties!
-
 class PlayerStatsObject {
   final bool success;
   final PlayerStatsResponse response;
@@ -326,9 +324,7 @@ class PlayerStatsResponse {
       horseCasualDeaths: json['horse-casual-deaths'] as int,
       horseCasualWinstreak: json['horse-casual-winstreak'] as int,
       horseCasualBestWinstreak: json['horse-casual-best-winstreak'] as int,
-
     );
   }
-
 }
 

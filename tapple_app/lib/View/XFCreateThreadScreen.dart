@@ -14,14 +14,11 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     _messageController.dispose();
     _titleController.dispose();
     super.dispose();
   }
-
 
   void postNewReply(message,title) async {
     await postThread(widget.nodeID, title, message).then((bool success){
@@ -41,17 +38,14 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
         );
       }
     });
-
   }
 
   reactToStatusCode() async {
     await postNewReply(_messageController.text,_titleController.text);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

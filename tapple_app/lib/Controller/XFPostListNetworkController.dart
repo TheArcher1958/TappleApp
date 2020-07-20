@@ -5,7 +5,6 @@ import '../SensitiveCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'package:tappleapp/Globals.dart';
 
-
 Future<ThreadPosts> fetchPosts(int id, int page) async {
   var tapUser = await storage.read(key: "tappleUsername");
   var tapPass = await storage.read(key: "tapplePassword");

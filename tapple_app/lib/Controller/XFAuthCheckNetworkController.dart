@@ -1,16 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:tappleapp/Model/XFThreadListObjectModel.dart';
-import '../SensitiveCredentials.dart';
 import 'package:http/http.dart' as http;
-
-
-
 
 Future<LoginResponse> fetchUserFromLogin(username, password) async {
 
   final response = await http.post(
-    //'https://tapple.world/archers_testing/mobile/mobileReadFromForums.php',
     'https://tapple.world/archers_testing/mobile/authentication.php',
     body: {
       'XF-Username': username, 'XF-Password': password,

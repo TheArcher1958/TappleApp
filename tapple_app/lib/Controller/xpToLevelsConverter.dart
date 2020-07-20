@@ -3,7 +3,6 @@ class LevelInfo {
   final int remainingXP;
   final double levelAndFraction;
   LevelInfo(this.level,this.remainingXP, this.levelAndFraction);
-
 }
 final Set<int> LEVEL_2_10_EXP = { 225, 1025, 1750, 3750, 4750, 6000, 8250, 10250, 12750};
 final int LEVEL_11_50_EXP = 13500;

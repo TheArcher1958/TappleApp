@@ -1,11 +1,9 @@
 import 'package:tappleapp/Globals.dart';
 import 'package:http/http.dart' as http;
 
-
 Future<List<dynamic>> getLogin(storage) async {
   var tapUser = await storage.read(key: "tappleUsername");
   var tapPass = await storage.read(key: "tapplePassword");
-
   return [tapUser, tapPass];
 }
 

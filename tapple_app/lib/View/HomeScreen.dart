@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //final FirebaseDatabase _db = FirebaseDatabase.instance;
   final FirebaseMessaging _fcm = FirebaseMessaging();
   StreamSubscription iosSubscription;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -25,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _showLogoutScreen() async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Tapple Account', style: TextStyle(fontSize: 25),),
@@ -58,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -81,12 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     if (Platform.isIOS) {
       iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
-        // save the token  OR subscribe to a topic here
       });
 
       _fcm.requestNotificationPermissions(IosNotificationSettings());
     }
-
 
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -271,7 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
       body: listOfScreens[pageIndex],
     );
   }

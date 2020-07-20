@@ -9,22 +9,14 @@ import 'package:intl/intl.dart';
 
 
 class StatsViewScreen extends StatefulWidget {
-  final String playerName;//if you have multiple values add here
+  final String playerName;
   StatsViewScreen(this.playerName, {Key key}): super(key: key);
-  //StatsViewScreen(this.playerName);
-  //StatsViewScreen({Key key, @required this.playerName}) : super(key: key);
 
   @override
-//  State<StatefulWidget> createState() {
-//    return _StatsViewScreenState();
-//  }
-  //_StatsViewScreenState createState() => _StatsViewScreenState();
   State<StatefulWidget> createState() => _StatsViewScreenState();
 }
 
 class _StatsViewScreenState extends State<StatsViewScreen> {
-  //String playerName;
-  //_StatsViewScreenState(this.playerName);
 
   var rankColors = {
     'group.default': 'FFFFFF',
@@ -64,16 +56,19 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
     super.initState();
   }
 
-
   Future<PlayerStatsObject> getData() async {
     return fetchResults(widget.playerName);
   }
 
   void getObjectFromFuture() async {
     getData().then((PlayerStatsObject result){
-      setState(() {
-        data = result;
-      });
+      if(result == null) {
+        Navigator.pop(context, false);
+      } else {
+        setState(() {
+          data = result;
+        });
+      }
     });
   }
 
@@ -123,13 +118,9 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(
-                                //height: 90,
-                                //width: 900,
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(5, 8, 0, 8),
-                                  child: Image.network("https://crafatar.com/avatars/${data.response.uuid}"),
-                                ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 8, 0, 8),
+                                child: Image.network("https://crafatar.com/avatars/${data.response.uuid}"),
                               ),
                             ],
                           ),
@@ -137,7 +128,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(5,0,0,0),
                           child: Container(
-                            width: MediaQuery.of(context).size.height * 0.14,
+                            width: MediaQuery.of(context).size.height * 0.145,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -226,7 +217,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(0,0,0,0),
                                       child: Column(
@@ -284,7 +274,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-
                                           Text("Wins:", style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -410,7 +399,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
@@ -468,7 +456,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-
                                       Text("Wins:", style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -581,7 +568,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
@@ -639,7 +625,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-
                                           Text("Wins:", style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -773,7 +758,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
@@ -831,7 +815,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-
                                       Text("Wins:", style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -946,7 +929,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
@@ -1004,7 +986,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-
                                           Text("Wins:", style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -1138,7 +1119,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
@@ -1196,7 +1176,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-
                                       Text("Wins:", style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -1309,7 +1288,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                       child: Column(
@@ -1367,7 +1345,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-
                                           Text("Wins:", style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -1502,7 +1479,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(10,0,0,0),
                                   child: Column(
@@ -1560,7 +1536,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-
                                       Text("Wins:", style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -1653,7 +1628,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(0,0,0,0),
                                       child: Column(
@@ -1713,9 +1687,3 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
     );
   }
 }
-
-
-
-
-
-

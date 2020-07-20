@@ -1,15 +1,12 @@
 import 'dart:math';
 
 import 'package:tappleapp/Globals.dart';
-import '../SensitiveCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 Future<List<dynamic>> getLogin(storage) async {
   var tapUser = await storage.read(key: "tappleUsername");
   var tapPass = await storage.read(key: "tapplePassword");
-
   return [tapUser, tapPass];
 }
 

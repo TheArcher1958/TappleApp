@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tappleapp/Controller/XFAuthCheckNetworkController.dart';
 import 'package:tappleapp/Globals.dart';
 import 'HomeScreen.dart' as HomeScreen;
@@ -13,6 +16,7 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  final FirebaseMessaging _fcm = FirebaseMessaging();
 
   @override
   void initState() {
@@ -36,19 +40,71 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void checkForLogin(storage) async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
-    await remoteConfig.fetch(expiration: const Duration(hours: 5));
-    await remoteConfig.activateFetched();
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version;
-    if(remoteConfig.getString('appVersionNumber') == version) {
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        //Internet connection Valid
+        final RemoteConfig remoteConfig = await RemoteConfig.instance;
+        await remoteConfig.fetch(expiration: const Duration(hours: 5));
+        await remoteConfig.activateFetched();
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String version = packageInfo.version;
+        if(remoteConfig.getString('appVersionNumber') == version) {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => AlertDialog(
+              content: ListTile(
+                title: Text("A New Update is Available!"),
+                subtitle: Text("Please update the app to continue using it."),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+        } else {
+          Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+          _prefs.then((SharedPreferences prefs) {
+            if(prefs.getBool('eventNot') == true) {
+              _fcm.subscribeToTopic('events');
+            }
+          });
+
+          getLogin(storage).then((List<dynamic> result) async {
+            if (result[0] != null && result[1] != null) {
+              await fetchUserFromLogin(result[0], result[1]).then((userResponse) {
+                if (userResponse == null) {
+                  _deleteLogin(storage);
+                } else {
+                  globalUser = userResponse.user;
+                }
+              });
+            } else {}
+            Navigator.pushReplacement(context, MaterialPageRoute<void>(
+              builder: (BuildContext context) {
+                return HomeScreen.HomeScreen();
+              },
+            ),);
+          });
+        }
+      }
+    } on SocketException catch (_) {
+      //Internet connection Failed
       showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
           content: ListTile(
-            title: Text("A New Update is Available!"),
-            subtitle: Text("Please update the app to continue using it."),
+            title: Text("Connection Failed!"),
+            subtitle: Text("Tapple App requires an internet connection."),
           ),
           actions: <Widget>[
             FlatButton(
@@ -60,23 +116,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
           ],
         ),
       );
-    } else {
-      getLogin(storage).then((List<dynamic> result) async {
-        if (result[0] != null && result[1] != null) {
-          await fetchUserFromLogin(result[0], result[1]).then((userResponse) {
-            if (userResponse == null) {
-              _deleteLogin(storage);
-            } else {
-              globalUser = userResponse.user;
-            }
-          });
-        } else {}
-        Navigator.pushReplacement(context, MaterialPageRoute<void>(
-          builder: (BuildContext context) {
-            return HomeScreen.HomeScreen();
-          },
-        ),);
-      });
     }
   }
 

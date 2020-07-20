@@ -8,21 +8,6 @@ class LeaderboardsListScreen extends StatefulWidget {
 
 class _LeaderboardsListScreenState extends State<LeaderboardsListScreen> {
 
-//  var leaderboardGamemodeNames = {
-//    'totalxp': 'Total XP',
-//    'normal_builduhc': 'Build UHC',
-//    'normal_archer': 'Archer',
-//    'normal_potion': 'Potion',
-//    'normal_combo': 'Combo',
-//    'normal_sg': 'SG',
-//    'normal_skywars': 'Skywars',
-//    'normal_soup': 'Soup',
-//    'normal_parkour': 'Parkour',
-//    'normal_sumo': 'Sumo',
-//    'normal_spleef': 'Spleef',
-//    'normal_horse': 'Horse',
-//  };
-
   List<String> kitImagePaths = ["assets/TappleMapsShaders/tappleTotalxp-min.png","assets/TappleMapsShaders/tappleBuild-min.png", "assets/TappleMapsShaders/tappleBuildElo-min.png",
     "assets/TappleMapsShaders/tappleArcher-min.png","assets/TappleMapsShaders/tappleArcherElo-min.png", "assets/TappleMapsShaders/tapplePotion-min.png",
     "assets/TappleMapsShaders/tapplePotionElo-min.png", "assets/TappleMapsShaders/tappleCombo-min.png","assets/TappleMapsShaders/tappleSG-min.png",

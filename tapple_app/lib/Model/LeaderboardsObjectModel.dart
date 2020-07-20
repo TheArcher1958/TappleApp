@@ -1,4 +1,3 @@
-
 class LeaderboardsObject {
   final bool success;
   final List<LeaderboardsResponse> leaderboard;

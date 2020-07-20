@@ -11,22 +11,19 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   Future<bool> eventNot;
+  final FirebaseMessaging _fcm = FirebaseMessaging();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     eventNot = _prefs.then((SharedPreferences prefs) {
-      print(prefs.getBool('eventNot') ?? true);
       return (prefs.getBool('eventNot') ?? true);
     });
   }
 
   _toggleEventNots(bool newVal) async {
     final SharedPreferences prefs = await _prefs;
-
     setState(() {
       eventNot = prefs.setBool("eventNot", newVal).then((bool success) {
-        print("new Val " + newVal.toString());
         return newVal;
       });
     });
@@ -41,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: CircularProgressIndicator(),
         )
     );
-    final FirebaseMessaging _fcm = FirebaseMessaging();
+
     return Container(
       color: Color(0xff2D3238),
       child: FutureBuilder(
@@ -52,7 +49,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 return const CircularProgressIndicator();
               default:
                 if (snapshot.hasError) {
-                  print(snapshot.error);
                   return Text('Error: ${snapshot.error}');
                 } else {
                   return ListView(
@@ -67,14 +63,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text('Event Notifications'),
-
                             Switch(
-                            value: snapshot.data,
-                            onChanged: (val) {
-                            print("onPressed" + val.toString());
-                            _toggleEventNots(val);
-                            val == true ? _fcm.subscribeToTopic('events') : _fcm.unsubscribeFromTopic('events');
-                            },
+                              value: snapshot.data,
+                              onChanged: (val) {
+                                _toggleEventNots(val);
+                                val == true ? _fcm.subscribeToTopic('events') : _fcm.unsubscribeFromTopic('events');
+                              },
                             ),
                           ],
                         ),

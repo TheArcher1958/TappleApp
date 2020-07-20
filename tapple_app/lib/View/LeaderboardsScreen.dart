@@ -69,7 +69,6 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
     super.initState();
   }
 
-
   Future<LeaderboardsObject> getData(lbName) async {
     return fetchResults(lbName);
   }
@@ -80,6 +79,13 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
         data = result;
       });
     });
+  }
+
+  Future<void> _refreshPage() async {
+    setState(() {
+      data = null;
+    });
+    getObjectFromFuture(widget.leaderboardPath);
   }
 
   @override
@@ -104,79 +110,75 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
           title: Text(leaderboardGamemodeNames[widget.leaderboardPath]),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: DataTable(
-              columns: [
-                DataColumn(
-                  label: Text("#", style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'UniSansHeavy',
-                  ),),
-                  numeric: true,
-                ),
-                DataColumn(
-                  label: Text("Username",style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'UniSansHeavy',
-                  ),),
-                  numeric: false,
-                ),
-                DataColumn(
-                  label: Text("${widget.leaderboardPath.contains("elo") ? "Elo" : "XP"}",style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'UniSansHeavy',
-                  ),),
-                  numeric: false,
-                ),
-              ],
-              rows: data.leaderboard
-                  .map(
-                    (playerInfo) => DataRow(
-                    cells: [
-                      DataCell(
-                        Text("${playerInfo.position}", style: TextStyle(fontSize: 16),),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
-                          // write your code..
-                        },
-                      ),
-                      DataCell(
-                        RichText(
-                          text: TextSpan(
-                            text: "${rankNames[playerInfo.rank]} ",
-                            style: TextStyle(fontSize: 16, color: Color(int.parse("0xff${rankColors[playerInfo.rank]}"))),
-                            children: <TextSpan>[
-                              TextSpan(text: playerInfo.username, style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              )),
-                            ],
-                          ),
+        body: RefreshIndicator(
+          onRefresh: _refreshPage,
+          child: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: DataTable(
+                columns: [
+                  DataColumn(
+                    label: Text("#", style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'UniSansHeavy',
+                    ),),
+                    numeric: true,
+                  ),
+                  DataColumn(
+                    label: Text("Username",style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'UniSansHeavy',
+                    ),),
+                    numeric: false,
+                  ),
+                  DataColumn(
+                    label: Text("${widget.leaderboardPath.contains("elo") ? "Elo" : "XP"}",style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'UniSansHeavy',
+                    ),),
+                    numeric: false,
+                  ),
+                ],
+                rows: data.leaderboard
+                    .map(
+                      (playerInfo) => DataRow(
+                      cells: [
+                        DataCell(
+                          Text("${playerInfo.position}", style: TextStyle(fontSize: 16),),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
+                          },
                         ),
-                        //Text(playerInfo.username),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
-
-                          // write your code..
-                        },
-                      ),
-                      DataCell(
-                        Text(playerInfo.xp, style: TextStyle(fontSize: 16),),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
-
-                          // write your code..
-                        },
-                      ),
-                    ]),
-              )
-                  .toList(),
-
+                        DataCell(
+                          RichText(
+                            text: TextSpan(
+                              text: "${rankNames[playerInfo.rank]} ",
+                              style: TextStyle(fontSize: 16, color: Color(int.parse("0xff${rankColors[playerInfo.rank]}"))),
+                              children: <TextSpan>[
+                                TextSpan(text: playerInfo.username, style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                )),
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
+                          },
+                        ),
+                        DataCell(
+                          Text(playerInfo.xp, style: TextStyle(fontSize: 16),),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>StatsViewScreen(playerInfo.username)));
+                          },
+                        ),
+                      ]),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         ),
