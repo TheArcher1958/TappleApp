@@ -9,6 +9,8 @@ class XFCreateThreadScreen extends StatefulWidget {
 }
 
 class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
+  bool _lockedPostButton = false;
+  bool _loading = false;
   var _messageController = TextEditingController();
   var _titleController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -21,8 +23,15 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
   }
 
   void postNewReply(message,title) async {
+    setState(() {
+      _lockedPostButton = true;
+      _loading = true;
+    });
     await postThread(widget.nodeID, title, message).then((bool success){
-      print(success.toString());
+      setState(() {
+        _lockedPostButton = false;
+        _loading = false;
+      });
       if(success == true) {
         Navigator.pop(context, true);
       } else {
@@ -54,70 +63,75 @@ class _XFCreateThreadScreenState extends State<XFCreateThreadScreen> {
       ),
       body: Builder(
         builder: (context) =>SingleChildScrollView(
-          child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                SizedBox(height: 2,),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                    child: TextFormField(
-                      validator: (String value) {
-                        if (value.trim().isEmpty) {
-                          return 'Title may not be blank';
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: _titleController,
-                      style: TextStyle(
-                        fontFamily: "Roberto",
+          child: Column(
+            children: <Widget>[
+              _loading ? LinearProgressIndicator() : SizedBox(),
+              Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    SizedBox(height: 2,),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                        child: TextFormField(
+                          validator: (String value) {
+                            if (value.trim().isEmpty) {
+                              return 'Title may not be blank';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: _titleController,
+                          style: TextStyle(
+                            fontFamily: "Roberto",
+                          ),
+                          maxLines: 1,
+                          decoration: InputDecoration(hintText: "Thread title...",border: OutlineInputBorder(),),
+                        ),
                       ),
-                      maxLines: 1,
-                      decoration: InputDecoration(hintText: "Thread title...",border: OutlineInputBorder(),),
                     ),
-                  ),
-                ),
-                SizedBox(height: 15,),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      validator: (String value) {
-                        if (value.trim().isEmpty) {
-                          return 'Message may not be blank';
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: _messageController,
-                      style: TextStyle(
-                        fontFamily: "Roberto",
+                    SizedBox(height: 15,),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          validator: (String value) {
+                            if (value.trim().isEmpty) {
+                              return 'Message may not be blank';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: _messageController,
+                          style: TextStyle(
+                            fontFamily: "Roberto",
+                          ),
+                          maxLines: 12,
+                          decoration: InputDecoration(hintText: "Write your message...",border: OutlineInputBorder(),),
+                        ),
                       ),
-                      maxLines: 12,
-                      decoration: InputDecoration(hintText: "Write your message...",border: OutlineInputBorder(),),
                     ),
-                  ),
+                    RaisedButton(
+                      onPressed: _submit,
+                      color: Color(0xffff0e19),
+                      child: Text("Create Thread"),
+                    ),
+                  ],
                 ),
-                RaisedButton(
-                  onPressed: _submit,
-                  color: Color(0xffff0e19),
-                  child: Text("Create Thread"),
-                ),
-              ],
-            ),
-          ),
+              ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
   void _submit() {
-    if(_formKey.currentState.validate()) {
+    if(_formKey.currentState.validate() && _lockedPostButton == false) {
       reactToStatusCode();
       _titleController.clear();
       _messageController.clear();

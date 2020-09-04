@@ -30,7 +30,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   _handleLoginRequest(username, password, ctx) async {
+    setState(() {
+      _lockedLoginButton = true;
+      _loading = true;
+    });
     await fetchUserFromLogin(username, password).then((result){
+      setState(() {
+        _lockedLoginButton = false;
+        _loading = false;
+      });
       if(result == null) {
         final snackBar = SnackBar(
           backgroundColor: Color(0xff303c42),
@@ -47,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
       };
     });
   }
-
+  bool _lockedLoginButton = false;
+  bool _loading = false;
   bool _hidePasswordText = true;
 
   var _userController = TextEditingController();
@@ -76,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context) => SingleChildScrollView(
           child: Column(
           children: [
+            _loading ? LinearProgressIndicator() : SizedBox(),
             ClipPath(
               clipper: CustomHalfCircleClipper(),
               child: Container(
@@ -169,8 +179,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Login', style: TextStyle(fontSize: 25)),
                   textColor: Colors.white,
                   onPressed: () {
-                    if(_userController.text != "" && _passController.text != "") {
-                      _handleLoginRequest(_userController.text, _passController.text, context);
+                    if(_lockedLoginButton == false) {
+                      if (_userController.text != "" && _passController.text !=
+                          "") {
+                        _handleLoginRequest(
+                            _userController.text, _passController.text,
+                            context);
+                      }
                     }
                   },
                   color: Color(0xffFE7615),

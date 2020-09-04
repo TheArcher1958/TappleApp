@@ -227,6 +227,7 @@ class _XFPostListScreenState extends State<XFPostListScreen> {
                                         });
                                         reactToStatusCode(oldData);
                                         _replyController.clear();
+
                                       }
                                     },
                                     color: Color(0xffff0e19),
