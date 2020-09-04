@@ -11,6 +11,8 @@ String _toRecase(theString) {
 }
 
 class Item {
+  String gameType;
+  String teamSize;
   String gamemode;
   String experimentalIndex;
   String scenarios;
@@ -22,9 +24,11 @@ class Item {
   String name;
   String time;
 
-  Item(this.gamemode,this.experimentalIndex,this.playerFill,this.scenarios,this.message,this.name,this.date,this.eventTitle,this.time);
+  Item(this.gameType,this.teamSize,this.gamemode,this.experimentalIndex,this.playerFill,this.scenarios,this.message,this.name,this.date,this.eventTitle,this.time);
 
   Item.fromJson(var value){
+    this.gameType = value['gameType'];
+    this.teamSize = value['teamSize'];
     this.gamemode = value['gamemode'];
     this.experimentalIndex = value['experimentalIndex'];
     this.playerFill = value['playerFill'];
@@ -85,27 +89,34 @@ class _EventsScreenState extends State<EventsScreen> {
   final f = new DateFormat('MMM. d, ''yyyy');
   @override
   Widget build(BuildContext context) {
-    if(items.length == 0) return Container(
+    if(items.length == 0)
+      return Container(
         color: Color(0xff2D3238),
         padding: EdgeInsets.all(16.0),
         child:  Center(
           child: CircularProgressIndicator(),
         )
     );
-    items.sort((a,b) {
-      List<String> dates = a.date.split("-");
-      List<String> times = a.time.split(":");
-      DateTime aDate = DateTime(int.parse(dates[0]),int.parse(dates[1]),int.parse(dates[2]),int.parse(times[0]),int.parse(times[1]),);
-      List<String> bdates = b.date.split("-");
-      List<String> btimes = b.time.split(":");
-      DateTime bDate = DateTime(int.parse(bdates[0]),int.parse(bdates[1]),int.parse(bdates[2]),int.parse(btimes[0]),int.parse(btimes[1]));
-      return bDate.millisecondsSinceEpoch.compareTo(aDate.millisecondsSinceEpoch);
-    });
+    if(items.length > 1) {
+      items.sort((a,b) {
+        print(a);
+        print(b);
+        List<String> dates = a.date.split("-");
+        List<String> times = a.time.split(":");
+        DateTime aDate = DateTime(int.parse(dates[0]),int.parse(dates[1]),int.parse(dates[2]),int.parse(times[0]),int.parse(times[1]),);
+        List<String> bdates = b.date.split("-");
+        List<String> btimes = b.time.split(":");
+        DateTime bDate = DateTime(int.parse(bdates[0]),int.parse(bdates[1]),int.parse(bdates[2]),int.parse(btimes[0]),int.parse(btimes[1]));
+        return bDate.millisecondsSinceEpoch.compareTo(aDate.millisecondsSinceEpoch);
+      });
+    }
+
     return Container(
       color: Color(0xff2D3238),
       child: RefreshIndicator(
         onRefresh: _refreshPage,
         child: new ListView.builder(itemBuilder: (BuildContext context, int index) {
+          var scenList = items[index].scenarios.split(", ");
           return Padding(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
             child: Container(
@@ -146,10 +157,10 @@ class _EventsScreenState extends State<EventsScreen> {
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(7, 4, 7, 1),
-                                    child: Text("FFA",style: TextStyle(fontFamily: "UniSansHeavy",fontSize: 17),),
+                                    child: Text(items[index].gamemode,style: TextStyle(fontFamily: "UniSansHeavy",fontSize: 17),),
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Color(0xff61656B),
+                                    color: Color(0xffff0e19),
                                     borderRadius: BorderRadius.all(Radius.circular(20)),
                                   ),
                                 ),
@@ -157,13 +168,37 @@ class _EventsScreenState extends State<EventsScreen> {
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(7, 4, 7, 1),
-                                    child: Text("FFA",style: TextStyle(fontFamily: "UniSansHeavy",fontSize: 17),),
+                                    child: Text(
+                                      items[index].gameType == "FFA" ? "${items[index].gameType}" : "${items[index].gameType}: ${items[index].teamSize}",
+                                      style: TextStyle(
+                                        fontFamily: "UniSansHeavy",fontSize: 17
+                                      ),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffFE7615),
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                ),
+
+
+                                for(var item in scenList) Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(7, 4, 7, 1),
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(
+                                          fontFamily: "UniSansHeavy",fontSize: 17
+                                      ),
+                                    ),
                                   ),
                                   decoration: BoxDecoration(
                                     color: Color(0xff61656B),
                                     borderRadius: BorderRadius.all(Radius.circular(20)),
                                   ),
                                 ),
+
+
                               ],
                               direction: Axis.horizontal,
                               spacing: 7,

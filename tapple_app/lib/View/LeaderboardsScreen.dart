@@ -54,11 +54,13 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
     'normal_combo': 'Combo XP',
     'normal_sg': 'SG XP',
     'normal_skywars': 'Skywars XP',
+    'skywars_elo': 'Skywars Elo',
     'normal_soup': 'Soup XP',
     'normal_parkour': 'Parkour XP',
     'parkour_elo': 'Parkour Elo',
     'normal_sumo': 'Sumo XP',
     'normal_spleef': 'Spleef XP',
+    'spleef_elo': 'Spleef Elo',
     'normal_horse': 'Horse XP',
   };
 
@@ -90,17 +92,21 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(data == null) return Container(
-        color: Color(0xff2D3238),
-        padding: EdgeInsets.all(16.0),
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircularProgressIndicator(
-            ),
-          ],
-        )
-    );
+    if(data == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Tapple"),
+          centerTitle: true,
+        ),
+        body: Container(
+            color: Color(0xff2D3238),
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            )
+        ),
+      );
+    }
     if(data.success == false) {
       Navigator.pop(context);
     }

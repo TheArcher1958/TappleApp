@@ -84,17 +84,21 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(data == null) return Container(
-      color: Color(0xff2D3238),
-      padding: EdgeInsets.all(16.0),
-      child:  Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CircularProgressIndicator(
-          ),
-        ],
-      )
-    );
+    if(data == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Tapple"),
+          centerTitle: true,
+        ),
+        body: Container(
+            color: Color(0xff2D3238),
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            )
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -1043,7 +1047,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
 
 
 
-
 // FOURTH CARD | FOURTH CARD | FOURTH CARD | FOURTH CARD | FOURTH CARD | FOURTH CARD |
 
 
@@ -1074,7 +1077,7 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               fontSize: 18,
                               fontFamily: 'UniSansHeavy',
                             ),),
-                            Text("Soup Casual", style: TextStyle(
+                            Text("Skywars Comp", style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               fontFamily: 'UniSansHeavy',
@@ -1101,11 +1104,11 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("Soup XP:  ", style: TextStyle(
+                                  Text("Skywars Elo:  ", style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),),
-                                  Text("${data.response.soupXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                  Text("${data.response.skywarsElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
                                     fontSize: 16,
                                   ),),
                                 ],
@@ -1164,11 +1167,6 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               ],
                             ),
 
-
-
-
-
-
                             Row(
                               children: <Widget>[
                                 Padding(
@@ -1205,11 +1203,11 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text("${data.response.soupCasualWins}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.soupCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${getWinLoss(data.response.soupCasualWins, data.response.soupCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.soupCasualWinstreak}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.soupCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.skywarsCompetitiveWins}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.skywarsCompetitiveLosses}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.skywarsCompetitiveWins, data.response.skywarsCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.skywarsCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.skywarsCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
                                   ),
                                 )
@@ -1429,12 +1427,180 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
+                            Text("Spleef Casual", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              fontFamily: 'UniSansHeavy',
+                            ),),
+                            Text("Spleef Comp", style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              fontFamily: 'UniSansHeavy',
+                            ),),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Spleef XP:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.spleefXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Spleef Elo:  ", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),),
+                                  Text("${data.response.spleefElo.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                    fontSize: 16,
+                                  ),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("Wins:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Losses:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("W/L:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Winstreak:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Best Winstreak:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("${data.response.spleefCasualWins}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCasualLosses}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.spleefCasualWins, data.response.spleefCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCasualWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+
+
+
+
+
+
+                            Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("Wins:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Losses:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("W/L:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Winstreak:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                      Text("Best Winstreak:", style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text("${data.response.spleefCompetitiveWins}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCompetitiveLosses}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.spleefCompetitiveWins, data.response.spleefCompetitiveLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCompetitiveWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.spleefCompetitiveBestWinstreak}", style: TextStyle(fontSize: 17),),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+
+
+                // FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK |
+
+
+                back: Container(
+                  height: MediaQuery.of(context).size.height * 0.27,
+                  child: Card(
+                    elevation: 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
                             Text("Sumo Casual", style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               fontFamily: 'UniSansHeavy',
                             ),),
-                            Text("Spleef Casual", style: TextStyle(
+                            Text("Soup Casual", style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               fontFamily: 'UniSansHeavy',
@@ -1461,11 +1627,11 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("Spleef XP:  ", style: TextStyle(
+                                  Text("Soup XP:  ", style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),),
-                                  Text("${data.response.spleefXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
+                                  Text("${data.response.soupXP.toString().replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}", style: TextStyle(
                                     fontSize: 16,
                                   ),),
                                 ],
@@ -1565,14 +1731,14 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text("${data.response.spleefCasualWins}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.spleefCasualLosses}", style: TextStyle(fontSize: 17),),
-                                      Text("${getWinLoss(data.response.spleefCasualWins, data.response.spleefCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.spleefCasualWinstreak}", style: TextStyle(fontSize: 17),),
-                                      Text("${data.response.spleefCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.soupCasualWins}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.soupCasualLosses}", style: TextStyle(fontSize: 17),),
+                                      Text("${getWinLoss(data.response.soupCasualWins, data.response.soupCasualLosses).toStringAsFixed(1)}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.soupCasualWinstreak}", style: TextStyle(fontSize: 17),),
+                                      Text("${data.response.soupCasualBestWinstreak}", style: TextStyle(fontSize: 17),),
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ],
@@ -1581,13 +1747,30 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                     ),
                   ),
                 ),
+              ),
+            ),
 
 
 
-                // FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK | FIFTH CARD BACK |
 
 
-                back: Container(
+
+// SIXTH CARD | SIXTH CARD | SIXTH CARD | SIXTH CARD | SIXTH CARD | SIXTH CARD |
+
+
+
+
+
+
+
+
+
+
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: FlipCard(
+                direction: FlipDirection.HORIZONTAL, // default
+                front: Container(
                   child: Container(
                     height: 195,
                     child: Card(
@@ -1675,6 +1858,28 @@ class _StatsViewScreenState extends State<StatsViewScreen> {
                               ],
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+
+
+                // SIXTH CARD BACK | SIXTH CARD BACK | SIXTH CARD BACK | SIXTH CARD BACK | SIXTH CARD BACK |
+
+
+                back: Container(
+                  height: MediaQuery.of(context).size.height * 0.27,
+                  child: Center(
+                    child: Container(
+                      child: Container(
+                        child: Card(
+                          elevation: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Image.asset("assets/derpTapL.png"),
+                          ),
                         ),
                       ),
                     ),

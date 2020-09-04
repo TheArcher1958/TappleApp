@@ -86,6 +86,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             applicationIcon: Image.asset("assets/tappleAppIcon.png",width: 60,height: 60,),
                             applicationVersion: '1.0',
                             applicationName: 'Tapple',
+                            children: [
+                              Text('Created By: The_Archer',style: TextStyle(fontFamily: 'Roberto'),),
+                              Text('Discord: The_Archer#1958',style: TextStyle(fontFamily: 'Roberto'),),
+                            ],
                           );
                         },
                       ),

@@ -25,6 +25,7 @@ Future<NodeResponse> fetchThreads(int id, int page) async {
       },
     );
   }
+  print(response.body);
   final responseJson = json.decode(response.body);
   return NodeResponse.fromJson(responseJson);
 }

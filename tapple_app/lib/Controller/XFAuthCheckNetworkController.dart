@@ -11,7 +11,6 @@ Future<LoginResponse> fetchUserFromLogin(username, password) async {
       'XF-Username': username, 'XF-Password': password,
     },
   );
-
   final responseJson = json.decode(response.body);
   if(responseJson["success"] == true && responseJson["error"] == null) {
     return LoginResponse.fromJson(responseJson);

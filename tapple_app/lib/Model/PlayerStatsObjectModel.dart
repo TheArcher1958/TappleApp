@@ -133,6 +133,14 @@ class PlayerStatsResponse {
   final int skywarsCasualBestWinstreak;
   final int skywarsXP;
 
+  final int skywarsCompetitiveWins;
+  final int skywarsCompetitiveLosses;
+  final int skywarsCompetitiveKills;
+  final int skywarsCompetitiveDeaths;
+  final int skywarsCompetitiveWinstreak;
+  final int skywarsCompetitiveBestWinstreak;
+  final int skywarsElo;
+
 
   final int soupCasualWins;
   final int soupCasualLosses;
@@ -159,6 +167,14 @@ class PlayerStatsResponse {
   final int spleefCasualWinstreak;
   final int spleefCasualBestWinstreak;
   final int spleefXP;
+
+  final int spleefCompetitiveWins;
+  final int spleefCompetitiveLosses;
+  final int spleefCompetitiveKills;
+  final int spleefCompetitiveDeaths;
+  final int spleefCompetitiveWinstreak;
+  final int spleefCompetitiveBestWinstreak;
+  final int spleefElo;
 
 
   final int horseCasualWins;
@@ -189,7 +205,9 @@ class PlayerStatsResponse {
     this.spleefCasualBestWinstreak,this.spleefCasualDeaths,this.spleefCasualKills,this.spleefCasualLosses,this.spleefCasualWins,this.spleefCasualWinstreak,
     this.sumoCasualBestWinstreak,this.sumoCasualDeaths,this.sumoCasualKills,this.sumoCasualLosses,this.sumoCasualWins,this.sumoCasualWinstreak,
     this.archerXP,this.builduhcXP,this.comboXP,this.horseXP,this.parkourXP,this.potionXP,this.sgXP,this.skywarsXP,this.soupXP,this.spleefXP,this.sumoXP,
-    this.archerElo,this.builduhcElo,this.parkourElo,this.potionElo
+    this.archerElo,this.builduhcElo,this.parkourElo,this.potionElo,this.skywarsCompetitiveBestWinstreak,this.skywarsCompetitiveDeaths,this.skywarsCompetitiveKills,this.skywarsCompetitiveLosses,this.skywarsCompetitiveWins,
+    this.skywarsCompetitiveWinstreak,this.skywarsElo,this.spleefCompetitiveBestWinstreak,this.spleefCompetitiveDeaths,this.spleefCompetitiveKills,this.spleefCompetitiveLosses,
+    this.spleefCompetitiveWins,this.spleefCompetitiveWinstreak,this.spleefElo
   });
 
 
@@ -324,6 +342,21 @@ class PlayerStatsResponse {
       horseCasualDeaths: json['horse-casual-deaths'] as int,
       horseCasualWinstreak: json['horse-casual-winstreak'] as int,
       horseCasualBestWinstreak: json['horse-casual-best-winstreak'] as int,
+
+      skywarsCompetitiveBestWinstreak: json['skywars-competitive-best-winstreak'] as int,
+      skywarsCompetitiveDeaths: json['skywars-competitive-deaths'] as int,
+      skywarsCompetitiveKills: json['skywars-competitive-kills'] as int,
+      skywarsCompetitiveLosses: json['skywars-competitive-losses'] as int,
+      skywarsCompetitiveWins: json['skywars-competitive-wins'] as int,
+      skywarsCompetitiveWinstreak: json['skywars-competitive-winstreak'] as int,
+      skywarsElo: json['skywars-elo'] as int,
+      spleefCompetitiveBestWinstreak: json['spleef-competitive-best-winstreak'] as int,
+      spleefCompetitiveDeaths: json['spleef-competitive-deaths'] as int,
+      spleefCompetitiveKills: json['spleef-competitive-kills'] as int,
+      spleefCompetitiveLosses: json['spleef-competitive-losses'] as int,
+      spleefCompetitiveWins: json['spleef-competitive-wins'] as int,
+      spleefCompetitiveWinstreak: json['spleef-competitive-winstreak'] as int,
+      spleefElo: json['spleef-elo'] as int,
     );
   }
 }

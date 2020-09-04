@@ -11,13 +11,13 @@ class _LeaderboardsListScreenState extends State<LeaderboardsListScreen> {
   List<String> kitImagePaths = ["assets/TappleMapsShaders/tappleTotalxp-min.png","assets/TappleMapsShaders/tappleBuild-min.png", "assets/TappleMapsShaders/tappleBuildElo-min.png",
     "assets/TappleMapsShaders/tappleArcher-min.png","assets/TappleMapsShaders/tappleArcherElo-min.png", "assets/TappleMapsShaders/tapplePotion-min.png",
     "assets/TappleMapsShaders/tapplePotionElo-min.png", "assets/TappleMapsShaders/tappleCombo-min.png","assets/TappleMapsShaders/tappleSG-min.png",
-    "assets/TappleMapsShaders/tappleSkywars-min.png","assets/TappleMapsShaders/tappleSoup-min.png","assets/TappleMapsShaders/tappleParkour-min.png",
+    "assets/TappleMapsShaders/tappleSkywars-min.png","assets/TappleMapsShaders/Skywars_elo-min.png","assets/TappleMapsShaders/tappleSoup-min.png","assets/TappleMapsShaders/tappleParkour-min.png",
     "assets/TappleMapsShaders/tappleParkourElo-min.png","assets/TappleMapsShaders/tappleSumo-min.jpg", "assets/TappleMapsShaders/tappleSpleef-min.png",
-    "assets/TappleMapsShaders/tappleHorse-min.png"];
-  List<String> leaderboardNames = ["totalxp","normal_build", "build_elo","normal_archer","archer_elo", "normal_potion","potion_elo", "normal_combo","normal_sg","normal_skywars","normal_soup",
-  "normal_parkour","parkour_elo", "normal_sumo","normal_spleef","normal_horse"];
-  List<String> leaderboardDisplayNames = ["Total XP","Build UHC XP","Build UHC Elo", "Archer XP","Archer Elo", "Potion XP","Potion Elo", "Combo XP","SG XP","Skywars XP","Soup XP",
-    "Parkour XP","Parkour Elo", "Sumo XP","Spleef XP","Horse XP"];
+    "assets/TappleMapsShaders/Spleef_elo-min.png","assets/TappleMapsShaders/tappleHorse-min.png"];
+  List<String> leaderboardNames = ["totalxp","normal_build", "build_elo","normal_archer","archer_elo", "normal_potion","potion_elo", "normal_combo","normal_sg","normal_skywars","skywars_elo","normal_soup",
+  "normal_parkour","parkour_elo", "normal_sumo","normal_spleef","spleef_elo","normal_horse"];
+  List<String> leaderboardDisplayNames = ["Total XP","Build UHC XP","Build UHC Elo", "Archer XP","Archer Elo", "Potion XP","Potion Elo", "Combo XP","SG XP","Skywars XP","Skywars Elo","Soup XP",
+    "Parkour XP","Parkour Elo", "Sumo XP","Spleef XP","Spleef Elo","Horse XP"];
 
   @override
   Widget build(BuildContext context) {

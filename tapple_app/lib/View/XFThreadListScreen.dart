@@ -77,13 +77,21 @@ class _XFThreadListScreenState extends State<XFThreadListScreen> {
   @override
   Widget build(BuildContext context) {
 
-    if(data == null) return Container(
-        color: Color(0xff2D3238),
-        padding: EdgeInsets.all(16.0),
-        child:  Center(
-          child: CircularProgressIndicator(),
-        )
-    );
+    if(data == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Tapple"),
+          centerTitle: true,
+        ),
+        body: Container(
+            color: Color(0xff2D3238),
+            padding: EdgeInsets.all(16.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            )
+        ),
+      );
+    }
     var threadListWithStickys = [...data.sticky, ...data.threads];
     var paginationList = [for(var i=0; i<data.pagination.last_page; i+=1) i];
     if (threadListWithStickys.length > 0) {

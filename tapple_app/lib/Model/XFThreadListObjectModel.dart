@@ -10,8 +10,11 @@ class NodeResponse {
     List<Thread> _tagsThreads = threadsJson.map((tagJson) => Thread.fromJson(tagJson))
         .toList();
     var stickyJson = json['sticky'] as List;
-    List<Thread> _tagsSticky = stickyJson.map((tagJson) => Thread.fromJson(tagJson))
-        .toList();
+    List<Thread> _tagsSticky = [];
+    if(stickyJson != null) {
+      _tagsSticky = stickyJson.map((tagJson) => Thread.fromJson(tagJson))
+          .toList();
+    }
     return NodeResponse(
       _tagsSticky,
       _tagsThreads,
